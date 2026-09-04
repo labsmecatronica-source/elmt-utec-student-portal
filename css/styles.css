@@ -1,0 +1,559 @@
+:root {
+  --color-brand: #00bfff;
+  --color-brand-aqua: #0ff0ff;
+  --color-brand-soft: #bff0ff;
+  --color-accent: #fbbc05;
+  --color-ink: #231f20;
+  --color-muted: #5f6480;
+  --color-border: #cadaef;
+  --color-background: #f3f8ff;
+  --color-surface: #ffffff;
+  --shadow-card: 0 10px 26px rgba(35, 31, 32, 0.06);
+  --shadow-card-hover: 0 14px 30px rgba(35, 31, 32, 0.11);
+  --radius-large: 24px;
+  --radius-medium: 16px;
+  --radius-small: 10px;
+  --shell-width: 1120px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--color-ink);
+  background: var(--color-background);
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+}
+
+.shell {
+  width: min(var(--shell-width), calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 12px;
+  left: 12px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: var(--color-ink);
+  background: var(--color-accent);
+  font-weight: 750;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  border-top: 5px solid var(--color-brand);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 94px;
+  padding-block: 10px;
+}
+
+.brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.utec-logo {
+  width: 44px;
+  height: 56px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 42px;
+  flex: 0 0 auto;
+  margin-inline: 16px 12px;
+  background: var(--color-border);
+}
+
+.elmt-logo {
+  width: 82px;
+  height: 68px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.brand-copy {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+  margin-left: 4px;
+}
+
+.brand-copy strong {
+  font-size: 0.94rem;
+  line-height: 1.25;
+}
+
+.brand-copy span {
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.version-label {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-muted);
+  background: var(--color-background);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.hero {
+  color: var(--color-ink);
+  background: linear-gradient(110deg, var(--color-brand), var(--color-brand-aqua));
+}
+
+.hero-content {
+  padding-block: clamp(64px, 8vw, 94px);
+}
+
+.eyebrow,
+.section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before,
+.section-kicker::before {
+  width: 24px;
+  height: 3px;
+  background: currentColor;
+  content: "";
+}
+
+.hero h1,
+.section-heading h2 {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.hero h1 {
+  max-width: 820px;
+  margin: 14px 0 10px;
+  font-size: clamp(2.65rem, 7vw, 4.7rem);
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.hero-subtitle {
+  margin: 0;
+  font-size: clamp(1.02rem, 2vw, 1.2rem);
+  font-weight: 750;
+}
+
+.hero-description {
+  max-width: 660px;
+  margin: 15px 0 0;
+  font-size: 1rem;
+}
+
+.services-section {
+  padding-block: clamp(64px, 8vw, 92px);
+  background: var(--color-background);
+}
+
+.section-heading {
+  max-width: 680px;
+  margin-bottom: 52px;
+}
+
+.section-kicker {
+  color: var(--color-muted);
+}
+
+.section-kicker::before {
+  background: var(--color-brand);
+}
+
+.section-heading h2 {
+  margin: 9px 0 10px;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.section-heading > p:last-child {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.services-container {
+  display: grid;
+  gap: 50px;
+}
+
+.service-category {
+  min-width: 0;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.category-title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.category-header::before {
+  width: 24px;
+  height: 4px;
+  flex: 0 0 auto;
+  border-radius: 99px;
+  background: var(--color-brand);
+  content: "";
+}
+
+.category-header::after {
+  height: 1px;
+  flex: 1;
+  background: var(--color-border);
+  content: "";
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.service-card {
+  display: flex;
+  min-width: 0;
+  min-height: 218px;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+}
+
+.service-card.is-active {
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.service-card.is-active:hover {
+  border-color: var(--color-brand);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.card-top {
+  margin-bottom: 18px;
+}
+
+.service-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--color-ink);
+  background: var(--color-brand-soft);
+}
+
+.service-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.is-upcoming .service-icon {
+  color: var(--color-muted);
+  background: var(--color-background);
+}
+
+.card-title {
+  margin: 0 0 7px;
+  font-size: 1.14rem;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+.card-description {
+  max-width: 58ch;
+  margin: 0 0 20px;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.card-action {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding: 7px 12px;
+  border-radius: 9px;
+  color: var(--color-ink);
+  background: linear-gradient(100deg, var(--color-brand), var(--color-brand-aqua));
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.card-action-arrow {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transition: transform 180ms ease;
+}
+
+.is-active:hover .card-action-arrow {
+  transform: translate(2px, -2px);
+}
+
+.is-upcoming .card-action {
+  border: 1px solid rgba(251, 188, 5, 0.65);
+  color: #624800;
+  background: rgba(251, 188, 5, 0.18);
+}
+
+.noscript-message,
+.services-error {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-small);
+  color: var(--color-ink);
+  background: #fff8dc;
+}
+
+.site-footer {
+  border-top: 5px solid var(--color-brand);
+  color: rgba(255, 255, 255, 0.72);
+  background: var(--color-ink);
+}
+
+.footer-content {
+  display: flex;
+  min-height: 132px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-block: 30px;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+.footer-content .footer-title {
+  margin-bottom: 3px;
+  color: #ffffff;
+  font-size: 0.96rem;
+  font-weight: 750;
+}
+
+.footer-version {
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 4px;
+}
+
+@media (max-width: 720px) {
+  .shell {
+    width: min(var(--shell-width), calc(100% - 32px));
+  }
+
+  .header-content {
+    min-height: 82px;
+    gap: 12px;
+  }
+
+  .utec-logo {
+    width: 35px;
+    height: 45px;
+  }
+
+  .brand-divider {
+    height: 34px;
+    margin-inline: 11px 8px;
+  }
+
+  .elmt-logo {
+    width: 64px;
+    height: 54px;
+  }
+
+  .brand-copy {
+    margin-left: 0;
+  }
+
+  .brand-copy strong {
+    font-size: 0.82rem;
+  }
+
+  .brand-copy span {
+    display: none;
+  }
+
+  .hero-content {
+    padding-block: 58px 62px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 12vw, 3.8rem);
+  }
+
+  .services-section {
+    padding-block: 58px 70px;
+  }
+
+  .section-heading {
+    margin-bottom: 42px;
+  }
+
+  .services-container {
+    gap: 42px;
+  }
+
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    min-height: 210px;
+  }
+}
+
+@media (max-width: 520px) {
+  .version-label {
+    display: none;
+  }
+
+  .category-header {
+    gap: 10px;
+  }
+
+  .category-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.075em;
+  }
+
+  .footer-content {
+    min-height: 150px;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .shell {
+    width: min(var(--shell-width), calc(100% - 24px));
+  }
+
+  .brand-copy strong {
+    max-width: 118px;
+    line-height: 1.2;
+  }
+
+  .service-card {
+    min-height: 0;
+    padding: 21px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

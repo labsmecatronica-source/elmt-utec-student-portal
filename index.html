@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Portal de acceso a servicios, recursos y herramientas para estudiantes del Laboratorio del Departamento de Electrónica y Mecatrónica de UTEC."
+    >
+    <meta name="theme-color" content="#00bfff">
+    <title>Portal de Servicios ELMT</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/links.js" defer></script>
+    <script src="./js/app.js" defer></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido-principal">Ir al contenido principal</a>
+
+    <header class="site-header">
+      <div class="shell header-content">
+        <a class="brand" href="./" aria-label="Portal de Servicios ELMT, inicio">
+          <img class="utec-logo" src="./assets/utec-logo.png" alt="UTEC">
+          <span class="brand-divider" aria-hidden="true"></span>
+          <img class="elmt-logo" src="./assets/elmt-logo.png" alt="">
+          <span class="brand-copy">
+            <strong>Portal de Servicios ELMT</strong>
+            <span>Laboratorio del Departamento de Electrónica y Mecatrónica de UTEC</span>
+          </span>
+        </a>
+        <span class="version-label">v0.1.0</span>
+      </div>
+    </header>
+
+    <main id="contenido-principal">
+      <section class="hero" aria-labelledby="portal-title">
+        <div class="shell hero-content">
+          <p class="eyebrow">Portal estudiantil</p>
+          <h1 id="portal-title">Portal de Servicios ELMT</h1>
+          <p class="hero-subtitle">Laboratorio del Departamento de Electrónica y Mecatrónica de UTEC</p>
+          <p class="hero-description">
+            Accede a los principales servicios, herramientas y recursos disponibles
+            para estudiantes de los laboratorios.
+          </p>
+        </div>
+      </section>
+
+      <section class="services-section" id="servicios" aria-labelledby="services-title">
+        <div class="shell">
+          <div class="section-heading">
+            <p class="section-kicker">Directorio</p>
+            <h2 id="services-title">Servicios para estudiantes</h2>
+            <p>Selecciona un servicio para acceder a su plataforma correspondiente.</p>
+          </div>
+
+          <div id="services-container" class="services-container"></div>
+
+          <noscript>
+            <p class="noscript-message">
+              Activa JavaScript en tu navegador para visualizar y acceder a los servicios.
+            </p>
+          </noscript>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-content">
+        <div>
+          <p class="footer-title">Portal de Servicios ELMT</p>
+          <p>Laboratorio del Departamento de Electrónica y Mecatrónica de UTEC</p>
+        </div>
+        <p class="footer-version">Versión 0.1.0</p>
+      </div>
+    </footer>
+  </body>
+</html>
