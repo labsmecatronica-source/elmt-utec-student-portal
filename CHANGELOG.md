@@ -4,6 +4,13 @@ Este documento registra los cambios, decisiones y funcionalidades incorporadas e
 
 El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse sin sobrescribir el historial existente.
 
+## Sin publicar
+
+### Modificado
+
+- 2026-09-05: Activación del Buzón de Mejora Continua ELMT con el enlace definitivo: <https://forms.gle/pru5PSTj8Z2nbuSr7>.
+- 2026-09-05: Activación de Experiencia y Satisfacción con el enlace definitivo a la encuesta de satisfacción de estudiantes de los Laboratorios del Departamento de Electrónica y Mecatrónica: <https://forms.gle/MguoEYNsqEcxe6Dz7>.
+
 ## [0.1.0] - 2026-09-04
 
 ### Añadido
@@ -54,10 +61,10 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ## Próxima versión prevista — v0.2.0
 
+La incorporación de los enlaces definitivos de Experiencia y Satisfacción y del Buzón de Mejora Continua se completó el 2026-09-05 y está registrada en «Sin publicar».
+
 ### Pendiente
 
-- Incorporar el enlace definitivo del Buzón de Mejora Continua.
-- Incorporar el enlace definitivo de Experiencia y Satisfacción.
 - Diseñar la propuesta funcional de Talleres y Capacitaciones.
 - Diseñar la propuesta funcional de Comunicados y Novedades.
 - Definir la futura estructura de Recursos y Documentación Técnica.

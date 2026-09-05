@@ -35,8 +35,8 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 | Servicios | Préstamo de Equipos y Componentes | Google Forms | Activo |
 | Comunidad | Talleres y Capacitaciones | Por definir | Próximamente |
 | Comunidad | Comunicados y Novedades | Por definir | Próximamente |
-| Participación y Experiencia | Buzón de Mejora Continua | Google Forms | Próximamente |
-| Participación y Experiencia | Experiencia y Satisfacción | Google Forms | Próximamente |
+| Participación y Experiencia | Buzón de Mejora Continua | Google Forms | Activo |
+| Participación y Experiencia | Experiencia y Satisfacción | Google Forms | Activo |
 | Recursos | Recursos y Documentación Técnica | Por definir | Próximamente |
 
 ## Enlaces de acceso rápido
@@ -57,10 +57,15 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 
 <https://forms.gle/XsWRXcCbcJ6nVHmK7>
 
-### Enlaces pendientes
+### Buzón de Mejora Continua
 
-- Buzón de Mejora Continua: pendiente.
-- Experiencia y Satisfacción: pendiente.
+<https://forms.gle/pru5PSTj8Z2nbuSr7>
+
+### Experiencia y Satisfacción
+
+Encuesta de satisfacción de estudiantes de los Laboratorios del Departamento de Electrónica y Mecatrónica.
+
+<https://forms.gle/MguoEYNsqEcxe6Dz7>
 
 ### Web App de horarios — referencia técnica
 
