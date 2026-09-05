@@ -4,6 +4,7 @@
  * Configuración única de categorías, servicios y enlaces del portal.
  * Para habilitar un servicio futuro solo se deben actualizar `url`, `active`
  * y `status` en su registro correspondiente.
+ * Los procesos de Manufactura Digital se agregan en su arreglo `options`.
  */
 const SERVICE_CATEGORIES = Object.freeze([
   Object.freeze({ id: "open-labs", title: "Open Labs" }),
@@ -32,7 +33,7 @@ const SERVICES = Object.freeze([
   Object.freeze({
     id: "registro-open-lab",
     category: "open-labs",
-    title: "Registro de Uso de Laboratorio",
+    title: "Registro de Uso de Laboratorios",
     description:
       "Registra tu participación y uso de los espacios Open Lab.",
     type: "Google Forms",
@@ -47,11 +48,25 @@ const SERVICES = Object.freeze([
     title: "Manufactura Digital",
     description:
       "Accede a los servicios de fabricación y prototipado disponibles en los laboratorios.",
-    type: "Google Forms",
+    type: "Catálogo de procesos",
     icon: "cube",
-    url: "https://forms.gle/SJmFym5iLZRMy8tx7",
+    url: "",
     active: true,
     status: "Activo",
+    options: Object.freeze([
+      Object.freeze({
+        id: "impresion-3d",
+        title: "Impresión 3D",
+        description:
+          "Solicita la fabricación de piezas mediante impresión 3D.",
+        type: "Google Forms",
+        icon: "printer",
+        action: "Solicitar impresión",
+        url: "https://forms.gle/SJmFym5iLZRMy8tx7",
+        active: true,
+        status: "Activo",
+      }),
+    ]),
   }),
   Object.freeze({
     id: "prestamos",

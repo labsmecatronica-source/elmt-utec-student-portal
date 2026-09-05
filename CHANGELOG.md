@@ -8,6 +8,8 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ### Modificado
 
+- 2026-09-05: Actualización de la denominación institucional a Laboratorios del Departamento de Electrónica y Mecatrónica de UTEC y uso del plural en los textos vigentes del portal, incluido Registro de Uso de Laboratorios.
+- 2026-09-05: Conversión de Manufactura Digital en un catálogo desplegable y ampliable desde `options` en `js/links.js`, con Impresión 3D como único proceso disponible y conservación de su formulario de solicitudes.
 - 2026-09-05: Renombrado de Recursos y Documentación Técnica a Manuales y Guías Técnicas de Equipamiento y activación del acceso a las guías de operación y uso de los equipos de los laboratorios en Google Drive: <https://drive.google.com/drive/folders/1fAKZQZ6WRs_3VFLL0njjvD0NcQoZ1Tsg?usp=sharing>.
 - 2026-09-05: Activación de Talleres y Capacitaciones con su página externa publicada en GitHub Pages: <https://labsmecatronica-source.github.io/elmt-talleres/>.
 - 2026-09-05: Ampliación de la documentación para publicar el portal desde `main` y `/(root)` mediante GitHub Desktop y GitHub Pages.

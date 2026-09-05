@@ -9,6 +9,8 @@ const ICON_PATHS = Object.freeze({
     '<path d="M9 5H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"></path><rect x="9" y="2" width="6" height="6" rx="2"></rect><path d="m9 15 2 2 4-4"></path>',
   cube:
     '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"></path><path d="m4.3 7.7 7.7 4.4 7.7-4.4M12 12.1V21"></path>',
+  printer:
+    '<path d="M4 21V3h16v18M2 21h20M4 6h16M12 6v3m-2 0 2 3 2-3h-4Z"></path><path d="m8 16 4-2 4 2v4H8v-4Zm0 0 4 2 4-2M12 18v2"></path>',
   toolbox:
     '<path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M3 12h18M10 12v3h4v-3"></path>',
   training:
@@ -25,6 +27,9 @@ const ICON_PATHS = Object.freeze({
 
 const EXTERNAL_ARROW_ICON =
   '<svg class="card-action-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m6 14 8-8M8 6h6v6"></path></svg>';
+
+const PROCESS_CHEVRON_ICON =
+  '<svg class="process-chevron" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m5 7.5 5 5 5-5"></path></svg>';
 
 function createElement(tagName, className, text) {
   const element = document.createElement(tagName);
@@ -63,24 +68,99 @@ function getExternalUrl(service) {
   }
 }
 
+function configureExternalLink(link, service, externalUrl, actionLabel) {
+  link.setAttribute("href", externalUrl);
+  link.setAttribute("target", "_blank");
+  link.setAttribute("rel", "noopener noreferrer");
+  link.setAttribute(
+    "aria-label",
+    `${service.title}. ${service.description} ${actionLabel}; se abre en una pestaña nueva.`,
+  );
+}
+
+function createAction(className, label, isActive) {
+  const action = createElement("span", className, label);
+
+  if (isActive) {
+    const arrowTemplate = document.createElement("template");
+    arrowTemplate.innerHTML = EXTERNAL_ARROW_ICON;
+    action.append(arrowTemplate.content.firstElementChild.cloneNode(true));
+  }
+
+  return action;
+}
+
+function createProcessOption(process) {
+  const externalUrl = getExternalUrl(process);
+  const isActive = Boolean(externalUrl);
+  const option = isActive
+    ? createElement("a", "process-option is-active")
+    : createElement("div", "process-option is-upcoming");
+  const actionLabel = process.action || "Acceder";
+  const copy = createElement("span", "process-copy");
+
+  option.dataset.processId = process.id;
+
+  if (isActive) {
+    configureExternalLink(option, process, externalUrl, actionLabel);
+  } else {
+    option.setAttribute("aria-disabled", "true");
+  }
+
+  copy.append(
+    createElement("span", "process-title", process.title),
+    createElement("span", "process-description", process.description),
+    createAction(
+      "process-action",
+      isActive ? actionLabel : process.status,
+      isActive,
+    ),
+  );
+  option.append(createIcon(process.icon), copy);
+
+  return option;
+}
+
+function createProcessSelector(options) {
+  const selector = createElement("details", "process-selector");
+  const summary = createElement("summary", "process-summary");
+  const list = createElement("ul", "process-list");
+  const chevronTemplate = document.createElement("template");
+
+  selector.open = true;
+  chevronTemplate.innerHTML = PROCESS_CHEVRON_ICON;
+  summary.append(
+    createElement("span", "", "Procesos disponibles"),
+    createElement("span", "process-count", String(options.length)),
+    chevronTemplate.content.firstElementChild.cloneNode(true),
+  );
+
+  options.forEach((process) => {
+    const item = createElement("li");
+    item.append(createProcessOption(process));
+    list.append(item);
+  });
+
+  selector.append(summary, list);
+  return selector;
+}
+
 function createCard(service) {
+  const isGroup =
+    service.active && Array.isArray(service.options) && service.options.length > 0;
   const externalUrl = getExternalUrl(service);
   const isActive = Boolean(externalUrl);
-  const card = isActive
-    ? createElement("a", "service-card is-active")
-    : createElement("article", "service-card is-upcoming");
+  const card = isGroup
+    ? createElement("article", "service-card is-group")
+    : isActive
+      ? createElement("a", "service-card is-active")
+      : createElement("article", "service-card is-upcoming");
 
   card.dataset.serviceId = service.id;
 
-  if (isActive) {
-    card.setAttribute("href", externalUrl);
-    card.setAttribute("target", "_blank");
-    card.setAttribute("rel", "noopener noreferrer");
-    card.setAttribute(
-      "aria-label",
-      `${service.title}. ${service.description} Acceder; se abre en una pestaña nueva.`,
-    );
-  } else {
+  if (!isGroup && isActive) {
+    configureExternalLink(card, service, externalUrl, "Acceder");
+  } else if (!isGroup) {
     card.setAttribute("aria-disabled", "true");
   }
 
@@ -91,21 +171,17 @@ function createCard(service) {
     "card-description",
     service.description,
   );
-  const action = createElement(
-    "span",
-    "card-action",
-    isActive ? "Acceder" : service.status,
-  );
-
   cardTop.append(createIcon(service.icon));
+  card.append(cardTop, title, description);
 
-  if (isActive) {
-    const arrowTemplate = document.createElement("template");
-    arrowTemplate.innerHTML = EXTERNAL_ARROW_ICON;
-    action.append(arrowTemplate.content.firstElementChild.cloneNode(true));
+  if (isGroup) {
+    card.append(createProcessSelector(service.options));
+  } else {
+    card.append(
+      createAction("card-action", isActive ? "Acceder" : service.status, isActive),
+    );
   }
 
-  card.append(cardTop, title, description, action);
   return card;
 }
 

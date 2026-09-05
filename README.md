@@ -1,6 +1,6 @@
 # Portal de Servicios ELMT
 
-Portal web para centralizar el acceso de los estudiantes a servicios, recursos, formularios y herramientas del Laboratorio del Departamento de Electrónica y Mecatrónica de UTEC.
+Portal web para centralizar el acceso de los estudiantes a servicios, recursos, formularios y herramientas de los Laboratorios del Departamento de Electrónica y Mecatrónica de UTEC.
 
 Esta versión corresponde exclusivamente al portal de estudiantes. El futuro sistema administrativo de los laboratorios será una aplicación independiente.
 
@@ -23,15 +23,15 @@ Portal de Servicios ELMT
 Google Sheets / Google Forms / Apps Script / futuros servicios
 ```
 
-GitHub Pages funciona actualmente como la capa de presentación y acceso centralizado. El portal no almacena los datos de los servicios ni requiere un backend propio: cada servicio activo se abre en una pestaña nueva y continúa operando en la plataforma externa correspondiente.
+GitHub Pages funciona actualmente como la capa de presentación y acceso centralizado. El portal no almacena los datos de los servicios ni requiere un backend propio: cada acceso externo activo se abre en una pestaña nueva y continúa operando en la plataforma correspondiente. Manufactura Digital despliega un catálogo de procesos dentro del portal; actualmente contiene únicamente Impresión 3D.
 
 ## Servicios
 
 | Categoría | Servicio | Tipo | Estado |
 |---|---|---|---|
 | Open Labs | Disponibilidad y Horarios | Google Sheets | Activo |
-| Open Labs | Registro de Uso de Laboratorio | Google Forms | Activo |
-| Servicios | Manufactura Digital | Google Forms | Activo |
+| Open Labs | Registro de Uso de Laboratorios | Google Forms | Activo |
+| Servicios | Manufactura Digital | Catálogo de procesos | Activo |
 | Servicios | Préstamo de Equipos y Componentes | Google Forms | Activo |
 | Comunidad | Talleres y Capacitaciones | Página web (GitHub Pages) | Activo |
 | Comunidad | Comunicados y Novedades | Por definir | Próximamente |
@@ -45,11 +45,13 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 
 <https://docs.google.com/spreadsheets/d/1Mdkzg8lXQ0fQRrPDvZ_DR3dMAmf7B5mG6yaSI4I1ygU/edit?usp=sharing>
 
-### Registro de Uso de Laboratorio
+### Registro de Uso de Laboratorios
 
 <https://forms.gle/QfckCSopiWtbBaPv8>
 
 ### Manufactura Digital
+
+Formulario de solicitudes de Impresión 3D, disponible en el catálogo de Manufactura Digital.
 
 <https://forms.gle/SJmFym5iLZRMy8tx7>
 
@@ -122,6 +124,28 @@ status: "Activo"
 ```
 
 Mientras un servicio no esté disponible, debe conservar una URL vacía, `active: false` y el estado `"Próximamente"`.
+
+### Procesos de Manufactura Digital
+
+El módulo con `id: "manufactura-digital"` contiene un arreglo `options` en `js/links.js`. Su tarjeta despliega las opciones disponibles y cada proceso tiene su propio enlace y estado. Actualmente solo se ofrece Impresión 3D:
+
+```js
+{
+  id: "impresion-3d",
+  title: "Impresión 3D",
+  description: "Solicita la fabricación de piezas mediante impresión 3D.",
+  type: "Google Forms",
+  icon: "printer",
+  action: "Solicitar impresión",
+  url: "https://forms.gle/SJmFym5iLZRMy8tx7",
+  active: true,
+  status: "Activo"
+}
+```
+
+Para añadir un proceso, agrega otro registro con estas mismas propiedades dentro de `options`, usando un `id` único, su nombre, descripción, tipo de servicio, icono disponible y enlace. El catálogo se genera automáticamente sin editar el HTML. Los demás servicios conservan su configuración habitual; `js/links.js` sigue siendo la única fuente de enlaces utilizada por la interfaz.
+
+La propiedad opcional `action` personaliza el texto de acceso de cada proceso; si se omite, se muestra «Acceder».
 
 ## Seguridad
 
