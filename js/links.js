@@ -71,11 +71,11 @@ const SERVICES = Object.freeze([
     title: "Talleres y Capacitaciones",
     description:
       "Consulta actividades de formación y capacitación técnica organizadas por los laboratorios.",
-    type: "Por definir",
+    type: "Página web (GitHub Pages)",
     icon: "training",
-    url: "",
-    active: false,
-    status: "Próximamente",
+    url: "https://labsmecatronica-source.github.io/elmt-talleres/",
+    active: true,
+    status: "Activo",
   }),
   Object.freeze({
     id: "comunicados",

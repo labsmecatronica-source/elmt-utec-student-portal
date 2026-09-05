@@ -8,6 +8,8 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ### Modificado
 
+- 2026-09-05: Activación de Talleres y Capacitaciones con su página externa publicada en GitHub Pages: <https://labsmecatronica-source.github.io/elmt-talleres/>.
+- 2026-09-05: Ampliación de la documentación para publicar el portal desde `main` y `/(root)` mediante GitHub Desktop y GitHub Pages.
 - 2026-09-05: Activación del Buzón de Mejora Continua ELMT con el enlace definitivo: <https://forms.gle/pru5PSTj8Z2nbuSr7>.
 - 2026-09-05: Activación de Experiencia y Satisfacción con el enlace definitivo a la encuesta de satisfacción de estudiantes de los Laboratorios del Departamento de Electrónica y Mecatrónica: <https://forms.gle/MguoEYNsqEcxe6Dz7>.
 
@@ -63,9 +65,10 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 La incorporación de los enlaces definitivos de Experiencia y Satisfacción y del Buzón de Mejora Continua se completó el 2026-09-05 y está registrada en «Sin publicar».
 
+Talleres y Capacitaciones se resolvió mediante una página externa, integrada al portal el 2026-09-05 y registrada en «Sin publicar».
+
 ### Pendiente
 
-- Diseñar la propuesta funcional de Talleres y Capacitaciones.
 - Diseñar la propuesta funcional de Comunicados y Novedades.
 - Definir la futura estructura de Recursos y Documentación Técnica.
 - Revisar la experiencia de usuario en dispositivos móviles.

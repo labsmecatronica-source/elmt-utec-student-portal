@@ -33,7 +33,7 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 | Open Labs | Registro de Uso de Laboratorio | Google Forms | Activo |
 | Servicios | Manufactura Digital | Google Forms | Activo |
 | Servicios | Préstamo de Equipos y Componentes | Google Forms | Activo |
-| Comunidad | Talleres y Capacitaciones | Por definir | Próximamente |
+| Comunidad | Talleres y Capacitaciones | Página web (GitHub Pages) | Activo |
 | Comunidad | Comunicados y Novedades | Por definir | Próximamente |
 | Participación y Experiencia | Buzón de Mejora Continua | Google Forms | Activo |
 | Participación y Experiencia | Experiencia y Satisfacción | Google Forms | Activo |
@@ -56,6 +56,10 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 ### Préstamo de Equipos y Componentes
 
 <https://forms.gle/XsWRXcCbcJ6nVHmK7>
+
+### Talleres y Capacitaciones
+
+<https://labsmecatronica-source.github.io/elmt-talleres/>
 
 ### Buzón de Mejora Continua
 
@@ -130,6 +134,22 @@ Los controles de acceso institucional se realizan desde Google u otros servicios
 
 ## Publicación
 
-El proyecto está preparado para ejecutarse como un sitio estático mediante GitHub Pages. Una vez habilitada la publicación en la configuración del repositorio, GitHub Pages puede servir directamente los archivos del proyecto sin un proceso de compilación ni un servidor de aplicación.
+El proyecto está preparado para ejecutarse como un sitio estático mediante GitHub Pages. Los archivos se publican directamente desde la raíz de la rama `main`; no requiere instalar dependencias, ejecutar un build local ni mantener un servidor de aplicación.
+
+Cuando decidas publicar los cambios:
+
+1. En GitHub Desktop, selecciona el repositorio `elmt-utec-student-portal` y confirma que **Current branch** sea `main`.
+2. Revisa los archivos en **Changes** y selecciona los cambios que deseas publicar. Escribe un resumen, por ejemplo, `Activa talleres y actualiza servicios del portal`, y pulsa **Commit to main**. Esto guarda los cambios en el repositorio local.
+3. Pulsa **Push origin** para subir los commits a GitHub.
+4. Abre el repositorio [labsmecatronica-source/elmt-utec-student-portal](https://github.com/labsmecatronica-source/elmt-utec-student-portal) y entra a **Settings → Pages**.
+5. En **Build and deployment**, elige **Source → Deploy from a branch**. En **Branch**, selecciona `main` y la carpeta `/(root)`, y pulsa **Save**. Esta configuración normalmente solo se realiza una vez.
+6. Revisa la pestaña **Actions** y espera a que el despliegue de GitHub Pages termine correctamente. Si falla, abre la ejecución para consultar el error.
+7. Vuelve a **Settings → Pages**, abre **Visit site** cuando esté disponible y comprueba la carga de la página, los logos y los enlaces de los servicios desde la dirección publicada.
+
+Para configurar Pages necesitas permisos de administración o mantenimiento del repositorio. GitHub Pages está disponible para repositorios públicos con GitHub Free; su uso en repositorios privados depende del plan de la cuenta.
+
+Una vez configurado, cada nuevo push a `main` actualizará el sitio mediante un despliegue de GitHub Pages. Publicar cambios locales requiere hacer tanto el commit como el push; el commit por sí solo no actualiza la página.
+
+Estos pasos siguen la [guía oficial de GitHub para configurar la fuente de publicación de GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
 No se documenta una URL de producción hasta que la publicación haya sido habilitada y verificada.
