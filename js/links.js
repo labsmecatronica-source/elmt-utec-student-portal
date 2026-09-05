@@ -116,14 +116,14 @@ const SERVICES = Object.freeze([
   Object.freeze({
     id: "recursos-documentacion",
     category: "recursos",
-    title: "Recursos y Documentación Técnica",
+    title: "Manuales y Guías Técnicas de Equipamiento",
     description:
-      "Accede a documentación, guías y recursos técnicos de apoyo.",
-    type: "Por definir",
+      "Consulta las guías de operación y uso de los equipos de los laboratorios.",
+    type: "Google Drive",
     icon: "book",
-    url: "",
-    active: false,
-    status: "Próximamente",
+    url: "https://drive.google.com/drive/folders/1fAKZQZ6WRs_3VFLL0njjvD0NcQoZ1Tsg?usp=sharing",
+    active: true,
+    status: "Activo",
   }),
 ]);
 

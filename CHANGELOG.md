@@ -8,6 +8,7 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ### Modificado
 
+- 2026-09-05: Renombrado de Recursos y Documentación Técnica a Manuales y Guías Técnicas de Equipamiento y activación del acceso a las guías de operación y uso de los equipos de los laboratorios en Google Drive: <https://drive.google.com/drive/folders/1fAKZQZ6WRs_3VFLL0njjvD0NcQoZ1Tsg?usp=sharing>.
 - 2026-09-05: Activación de Talleres y Capacitaciones con su página externa publicada en GitHub Pages: <https://labsmecatronica-source.github.io/elmt-talleres/>.
 - 2026-09-05: Ampliación de la documentación para publicar el portal desde `main` y `/(root)` mediante GitHub Desktop y GitHub Pages.
 - 2026-09-05: Activación del Buzón de Mejora Continua ELMT con el enlace definitivo: <https://forms.gle/pru5PSTj8Z2nbuSr7>.
@@ -67,10 +68,11 @@ La incorporación de los enlaces definitivos de Experiencia y Satisfacción y de
 
 Talleres y Capacitaciones se resolvió mediante una página externa, integrada al portal el 2026-09-05 y registrada en «Sin publicar».
 
+Recursos y Documentación Técnica se resolvió mediante una carpeta externa de Google Drive, integrada al portal el 2026-09-05 como Manuales y Guías Técnicas de Equipamiento y registrada en «Sin publicar».
+
 ### Pendiente
 
 - Diseñar la propuesta funcional de Comunicados y Novedades.
-- Definir la futura estructura de Recursos y Documentación Técnica.
 - Revisar la experiencia de usuario en dispositivos móviles.
 - Validar la interfaz con usuarios estudiantes.
 - Incorporar ajustes visuales según feedback.

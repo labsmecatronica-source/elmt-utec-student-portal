@@ -37,7 +37,7 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 | Comunidad | Comunicados y Novedades | Por definir | Próximamente |
 | Participación y Experiencia | Buzón de Mejora Continua | Google Forms | Activo |
 | Participación y Experiencia | Experiencia y Satisfacción | Google Forms | Activo |
-| Recursos | Recursos y Documentación Técnica | Por definir | Próximamente |
+| Recursos | Manuales y Guías Técnicas de Equipamiento | Google Drive | Activo |
 
 ## Enlaces de acceso rápido
 
@@ -70,6 +70,12 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 Encuesta de satisfacción de estudiantes de los Laboratorios del Departamento de Electrónica y Mecatrónica.
 
 <https://forms.gle/MguoEYNsqEcxe6Dz7>
+
+### Manuales y Guías Técnicas de Equipamiento
+
+Consulta las guías de operación y uso de los equipos de los laboratorios.
+
+<https://drive.google.com/drive/folders/1fAKZQZ6WRs_3VFLL0njjvD0NcQoZ1Tsg?usp=sharing>
 
 ### Web App de horarios — referencia técnica
 
