@@ -11,6 +11,8 @@ const ICON_PATHS = Object.freeze({
     '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"></path><path d="m4.3 7.7 7.7 4.4 7.7-4.4M12 12.1V21"></path>',
   printer:
     '<path d="M4 21V3h16v18M2 21h20M4 6h16M12 6v3m-2 0 2 3 2-3h-4Z"></path><path d="m8 16 4-2 4 2v4H8v-4Zm0 0 4 2 4-2M12 18v2"></path>',
+  circuit:
+    '<rect x="3" y="3" width="18" height="18" rx="2"></rect><rect x="8" y="8" width="6" height="6" rx="1"></rect><path d="M3 8h3v3h2M11 3v5M14 11h4V8h3M11 14v7M14 17h4v4"></path>',
   toolbox:
     '<path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M3 12h18M10 12v3h4v-3"></path>',
   training:

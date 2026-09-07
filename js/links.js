@@ -66,6 +66,18 @@ const SERVICES = Object.freeze([
         active: true,
         status: "Activo",
       }),
+      Object.freeze({
+        id: "fabricacion-pcb",
+        title: "Fabricación de PCB",
+        description:
+          "Solicita la fabricación de placas de circuito impreso (PCB).",
+        type: "Google Forms",
+        icon: "circuit",
+        action: "Solicitar fabricación",
+        url: "https://forms.gle/ZCFm7zNAfcNg7VoXA",
+        active: true,
+        status: "Activo",
+      }),
     ]),
   }),
   Object.freeze({

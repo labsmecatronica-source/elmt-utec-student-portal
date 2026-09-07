@@ -6,6 +6,10 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ## Sin publicar
 
+### Añadido
+
+- 2026-09-07: Incorporación de Fabricación de PCB al catálogo de Manufactura Digital, junto a Impresión 3D, con su formulario de solicitudes: <https://forms.gle/ZCFm7zNAfcNg7VoXA>.
+
 ### Modificado
 
 - 2026-09-05: Actualización de la denominación institucional a Laboratorios del Departamento de Electrónica y Mecatrónica de UTEC y uso del plural en los textos vigentes del portal, incluido Registro de Uso de Laboratorios.

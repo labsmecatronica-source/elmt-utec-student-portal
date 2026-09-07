@@ -23,7 +23,7 @@ Portal de Servicios ELMT
 Google Sheets / Google Forms / Apps Script / futuros servicios
 ```
 
-GitHub Pages funciona actualmente como la capa de presentación y acceso centralizado. El portal no almacena los datos de los servicios ni requiere un backend propio: cada acceso externo activo se abre en una pestaña nueva y continúa operando en la plataforma correspondiente. Manufactura Digital despliega un catálogo de procesos dentro del portal; actualmente contiene únicamente Impresión 3D.
+GitHub Pages funciona actualmente como la capa de presentación y acceso centralizado. El portal no almacena los datos de los servicios ni requiere un backend propio: cada acceso externo activo se abre en una pestaña nueva y continúa operando en la plataforma correspondiente. Manufactura Digital despliega un catálogo de procesos dentro del portal; actualmente contiene Impresión 3D y Fabricación de PCB.
 
 ## Servicios
 
@@ -54,6 +54,10 @@ GitHub Pages funciona actualmente como la capa de presentación y acceso central
 Formulario de solicitudes de Impresión 3D, disponible en el catálogo de Manufactura Digital.
 
 <https://forms.gle/SJmFym5iLZRMy8tx7>
+
+Formulario de solicitudes de Fabricación de PCB, disponible en el catálogo de Manufactura Digital.
+
+<https://forms.gle/ZCFm7zNAfcNg7VoXA>
 
 ### Préstamo de Equipos y Componentes
 
@@ -127,7 +131,7 @@ Mientras un servicio no esté disponible, debe conservar una URL vacía, `active
 
 ### Procesos de Manufactura Digital
 
-El módulo con `id: "manufactura-digital"` contiene un arreglo `options` en `js/links.js`. Su tarjeta despliega las opciones disponibles y cada proceso tiene su propio enlace y estado. Actualmente solo se ofrece Impresión 3D:
+El módulo con `id: "manufactura-digital"` contiene un arreglo `options` en `js/links.js`. Su tarjeta despliega las opciones disponibles y cada proceso tiene su propio enlace y estado. Actualmente se ofrecen Impresión 3D y Fabricación de PCB. Este es un ejemplo de configuración de un proceso:
 
 ```js
 {
