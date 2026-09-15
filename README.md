@@ -188,12 +188,24 @@ Revisa los cambios localmente y sigue los pasos de Publicación cuando estén ap
 
 Los accesos a formularios del cuadro superior son independientes de los avisos públicos. No publiques respuestas, datos personales ni contenido de los formularios de participación. «Canal Confidencial de Consultas, Sugerencias y Quejas MT» conserva el nombre del formulario proporcionado; el portal solo enlaza al servicio externo y no garantiza anonimato ni modifica sus condiciones de acceso o tratamiento de datos.
 
+## Analítica de visitas
+
+El portal incorpora Cloudflare Web Analytics mediante un script al final de `index.html`, asociado al hostname `labsmecatronica-source.github.io`. La analítica utiliza un recurso externo; la interfaz y los accesos del portal siguen funcionando si ese recurso no carga. No se añade un contador ni un panel visible a la página.
+
+Para consultar las métricas, publica los cambios y abre **Web Analytics** en la cuenta de Cloudflare donde registraste el sitio. Tras recibir visitas en la página publicada, revisa allí las visitas y las páginas vistas. La medición comienza con la instalación: no recupera visitas anteriores ni ofrece un listado de estudiantes.
+
+Esta integración no añade seguimiento de clics a los servicios ni al Canal Confidencial, y no recibe respuestas de Google Forms. Los informes son agregados. Los bloqueadores de contenido pueden impedir la medición, por lo que las cifras no representan necesariamente todos los accesos. Una prueba local mediante `file://` o `localhost` no confirma la recepción de datos del hostname configurado; debe comprobarse en Cloudflare después de publicar.
+
+El identificador incluido en `data-cf-beacon` es un token público de instalación, no una credencial para acceder a la cuenta de Cloudflare. Se mantiene únicamente en el snippet de `index.html`; no debe confundirse con tokens de acceso privados.
+
+Referencias: [instalación de Cloudflare Web Analytics](https://developers.cloudflare.com/web-analytics/get-started/) y [preguntas frecuentes](https://developers.cloudflare.com/web-analytics/faq/).
+
 ## Seguridad
 
 El repositorio puede contener URLs públicas o institucionales destinadas al acceso estudiantil, pero no debe contener:
 
 - contraseñas;
-- tokens;
+- tokens de acceso u otros tokens secretos;
 - API keys;
 - credenciales;
 - enlaces administrativos privados;

@@ -8,6 +8,7 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ### Añadido
 
+- 2026-09-15: Integración de Cloudflare Web Analytics en `index.html` para medir visitas y páginas vistas, sin cambios visuales ni seguimiento específico de clics o respuestas de formularios. La recepción de métricas debe verificarse en Cloudflare después de publicar; se documentan su alcance y las limitaciones de validación local.
 - 2026-09-15: Cuadro de avisos en la cabecera con espacios para Departamento ELMT (personal del departamento) y Vocería ELMT (representantes estudiantiles), configurables manualmente desde `noticeGroups` en `js/links.js` e inicialmente sin avisos publicados.
 - 2026-09-15: Incorporación del Canal Confidencial de Consultas, Sugerencias y Quejas MT a Participación y Experiencia: <https://forms.gle/s9ozgWQ1koSDEbfGA>.
 - 2026-09-07: Incorporación de Fabricación de PCB al catálogo de Manufactura Digital, junto a Impresión 3D, con su formulario de solicitudes: <https://forms.gle/ZCFm7zNAfcNg7VoXA>.
