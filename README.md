@@ -25,21 +25,38 @@ Google Sheets / Google Forms / Apps Script / futuros servicios
 
 GitHub Pages funciona actualmente como la capa de presentación y acceso centralizado. El portal no almacena los datos de los servicios ni requiere un backend propio: cada acceso externo activo se abre en una pestaña nueva y continúa operando en la plataforma correspondiente. Manufactura Digital despliega un catálogo de procesos dentro del portal; actualmente contiene Impresión 3D y Fabricación de PCB.
 
+La cabecera incluye el cuadro «Avisos y participación», organizado en dos espacios que reúnen sus propios accesos directos a Google Forms y avisos. Departamento ELMT, correspondiente al personal del departamento, contiene Buzón de Mejora Continua y Experiencia y Satisfacción. Vocería ELMT, correspondiente a los representantes estudiantiles e identificada con un icono de megáfono, contiene únicamente el Canal Confidencial de Consultas, Sugerencias y Quejas MT. No hay un bloque independiente de Participación y Experiencia encima de estos espacios. Comunicados y Novedades conduce a este cuadro dentro de la misma página, sin abrir otra pestaña. Los formularios no se duplican en el directorio, que comienza con Open Labs.
+
 ## Servicios
 
 | Categoría | Servicio | Tipo | Estado |
 |---|---|---|---|
+| Participación y Experiencia | Buzón de Mejora Continua | Google Forms | Activo |
+| Participación y Experiencia | Experiencia y Satisfacción | Google Forms | Activo |
+| Participación y Experiencia | Canal Confidencial de Consultas, Sugerencias y Quejas MT | Google Forms | Activo |
 | Open Labs | Disponibilidad y Horarios | Google Sheets | Activo |
 | Open Labs | Registro de Uso de Laboratorios | Google Forms | Activo |
 | Servicios | Manufactura Digital | Catálogo de procesos | Activo |
 | Servicios | Préstamo de Equipos y Componentes | Google Forms | Activo |
 | Comunidad | Talleres y Capacitaciones | Página web (GitHub Pages) | Activo |
-| Comunidad | Comunicados y Novedades | Por definir | Próximamente |
-| Participación y Experiencia | Buzón de Mejora Continua | Google Forms | Activo |
-| Participación y Experiencia | Experiencia y Satisfacción | Google Forms | Activo |
+| Comunidad | Comunicados y Novedades | Cuadro de avisos (acceso interno) | Activo |
 | Recursos | Manuales y Guías Técnicas de Equipamiento | Google Drive | Activo |
 
 ## Enlaces de acceso rápido
+
+### Buzón de Mejora Continua
+
+<https://forms.gle/pru5PSTj8Z2nbuSr7>
+
+### Experiencia y Satisfacción
+
+Encuesta de satisfacción de estudiantes de los Laboratorios del Departamento de Electrónica y Mecatrónica.
+
+<https://forms.gle/MguoEYNsqEcxe6Dz7>
+
+### Canal Confidencial de Consultas, Sugerencias y Quejas MT
+
+<https://forms.gle/s9ozgWQ1koSDEbfGA>
 
 ### Disponibilidad y Horarios
 
@@ -67,15 +84,9 @@ Formulario de solicitudes de Fabricación de PCB, disponible en el catálogo de 
 
 <https://labsmecatronica-source.github.io/elmt-talleres/>
 
-### Buzón de Mejora Continua
+### Comunicados y Novedades
 
-<https://forms.gle/pru5PSTj8Z2nbuSr7>
-
-### Experiencia y Satisfacción
-
-Encuesta de satisfacción de estudiantes de los Laboratorios del Departamento de Electrónica y Mecatrónica.
-
-<https://forms.gle/MguoEYNsqEcxe6Dz7>
+Acceso interno al cuadro de avisos: [`index.html#avisos`](./index.html#avisos).
 
 ### Manuales y Guías Técnicas de Equipamiento
 
@@ -101,7 +112,7 @@ elmt-utec-student-portal/
 ├── css/
 │   └── styles.css      → estilos visuales y diseño responsive
 ├── js/
-│   ├── links.js        → configuración centralizada de servicios y enlaces
+│   ├── links.js        → configuración centralizada de servicios, enlaces y avisos
 │   └── app.js          → lógica de interacción de la interfaz
 ├── assets/
 │   ├── utec-logo.png   → identidad visual de UTEC
@@ -129,6 +140,8 @@ status: "Activo"
 
 Mientras un servicio no esté disponible, debe conservar una URL vacía, `active: false` y el estado `"Próximamente"`.
 
+La categoría `participacion-experiencia` tiene `placement: "notice-board"` para mostrar sus accesos en el cuadro superior. Cada formulario usa `noticeGroup` para indicar el espacio que lo contiene: `"departamento"` para Buzón de Mejora Continua y Experiencia y Satisfacción, o `"voceria"` para el Canal Confidencial de Consultas, Sugerencias y Quejas MT. Sus enlaces siguen configurándose en `services`, dentro de `js/links.js`; no deben copiarse a los arreglos de avisos ni al HTML. Los accesos se presentan de forma compacta dentro de su grupo y abren directamente cada formulario en una pestaña nueva.
+
 ### Procesos de Manufactura Digital
 
 El módulo con `id: "manufactura-digital"` contiene un arreglo `options` en `js/links.js`. Su tarjeta despliega las opciones disponibles y cada proceso tiene su propio enlace y estado. Actualmente se ofrecen Impresión 3D y Fabricación de PCB. Este es un ejemplo de configuración de un proceso:
@@ -150,6 +163,30 @@ El módulo con `id: "manufactura-digital"` contiene un arreglo `options` en `js/
 Para añadir un proceso, agrega otro registro con estas mismas propiedades dentro de `options`, usando un `id` único, su nombre, descripción, tipo de servicio, icono disponible y enlace. El catálogo se genera automáticamente sin editar el HTML. Los demás servicios conservan su configuración habitual; `js/links.js` sigue siendo la única fuente de enlaces utilizada por la interfaz.
 
 La propiedad opcional `action` personaliza el texto de acceso de cada proceso; si se omite, se muestra «Acceder».
+
+## Actualización del cuadro de avisos
+
+Los avisos se administran manualmente en [`js/links.js`](./js/links.js), mediante los grupos de la propiedad `noticeGroups` de la configuración del portal:
+
+- `departamento`: Departamento ELMT, integrado por el personal del departamento.
+- `voceria`: Vocería ELMT, integrada por los representantes de los estudiantes ELMT.
+
+Cada grupo contiene `id`, `title`, `description`, `icon` y un arreglo `notices`. Ambos arreglos empiezan vacíos; la interfaz muestra que no hay avisos publicados, sin inventar comunicados.
+
+Para publicar, añade un registro al arreglo `notices` del grupo correspondiente. Esta es una plantilla de edición, no un aviso real; sustituye el título y el contenido antes de utilizarla:
+
+```js
+{
+  title: "Título del aviso aprobado",
+  body: "Contenido del aviso aprobado para su publicación."
+}
+```
+
+Opcionalmente, agrega `date` con una fecha en formato `YYYY-MM-DD`, `url` con un enlace HTTPS y `action` con el texto de ese enlace. Los avisos pueden publicarse sin fecha ni enlace. El orden dentro de `notices` determina el orden de presentación; para retirar un aviso, elimina su registro.
+
+Revisa los cambios localmente y sigue los pasos de Publicación cuando estén aprobados. No hay panel de edición, inicio de sesión, sincronización automática ni roles de administración dentro del portal: los dos grupos distinguen el origen de las comunicaciones, no conceden permisos. La edición se controla mediante los permisos del repositorio y los avisos publicados son visibles para todos los visitantes.
+
+Los accesos a formularios del cuadro superior son independientes de los avisos públicos. No publiques respuestas, datos personales ni contenido de los formularios de participación. «Canal Confidencial de Consultas, Sugerencias y Quejas MT» conserva el nombre del formulario proporcionado; el portal solo enlaza al servicio externo y no garantiza anonimato ni modifica sus condiciones de acceso o tratamiento de datos.
 
 ## Seguridad
 

@@ -8,10 +8,17 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ### Añadido
 
+- 2026-09-15: Cuadro de avisos en la cabecera con espacios para Departamento ELMT (personal del departamento) y Vocería ELMT (representantes estudiantiles), configurables manualmente desde `noticeGroups` en `js/links.js` e inicialmente sin avisos publicados.
+- 2026-09-15: Incorporación del Canal Confidencial de Consultas, Sugerencias y Quejas MT a Participación y Experiencia: <https://forms.gle/s9ozgWQ1koSDEbfGA>.
 - 2026-09-07: Incorporación de Fabricación de PCB al catálogo de Manufactura Digital, junto a Impresión 3D, con su formulario de solicitudes: <https://forms.gle/ZCFm7zNAfcNg7VoXA>.
 
 ### Modificado
 
+- 2026-09-15: Distribución de los formularios dentro de cada espacio de «Avisos y participación»: Departamento ELMT contiene Buzón de Mejora Continua y Experiencia y Satisfacción; Vocería ELMT contiene únicamente el Canal Confidencial de Consultas, Sugerencias y Quejas MT y se identifica con un icono de megáfono. Se elimina el bloque independiente sobre los grupos. La asignación se configura mediante `noticeGroup` en cada servicio, conservando `placement: "notice-board"`, las URLs centralizadas y los arreglos de avisos separados.
+- 2026-09-15: Reubicación de los tres accesos de Participación y Experiencia dentro de la parte superior del cuadro «Avisos y participación», encima de Departamento ELMT y Vocería ELMT, con enlace directo a cada formulario. Se retiran del directorio para evitar duplicados; Open Labs vuelve a ser su primera categoría. La ubicación se configura mediante `placement: "notice-board"` y los enlaces permanecen centralizados en `services` de `js/links.js`.
+- 2026-09-15: Ubicación de Participación y Experiencia como primera categoría del directorio.
+- 2026-09-15: Activación de Comunicados y Novedades como acceso interno a `#avisos`, sin abrir una nueva pestaña.
+- 2026-09-15: Documentación del mantenimiento manual de los avisos, la separación por origen sin roles de edición y la distinción entre comunicaciones públicas y consultas enviadas a formularios externos.
 - 2026-09-05: Actualización de la denominación institucional a Laboratorios del Departamento de Electrónica y Mecatrónica de UTEC y uso del plural en los textos vigentes del portal, incluido Registro de Uso de Laboratorios.
 - 2026-09-05: Conversión de Manufactura Digital en un catálogo desplegable y ampliable desde `options` en `js/links.js`, con Impresión 3D como único proceso disponible y conservación de su formulario de solicitudes.
 - 2026-09-05: Renombrado de Recursos y Documentación Técnica a Manuales y Guías Técnicas de Equipamiento y activación del acceso a las guías de operación y uso de los equipos de los laboratorios en Google Drive: <https://drive.google.com/drive/folders/1fAKZQZ6WRs_3VFLL0njjvD0NcQoZ1Tsg?usp=sharing>.
@@ -76,9 +83,11 @@ Talleres y Capacitaciones se resolvió mediante una página externa, integrada a
 
 Recursos y Documentación Técnica se resolvió mediante una carpeta externa de Google Drive, integrada al portal el 2026-09-05 como Manuales y Guías Técnicas de Equipamiento y registrada en «Sin publicar».
 
+Comunicados y Novedades se resolvió mediante un cuadro de avisos dentro del portal el 2026-09-15, con espacios para Departamento ELMT y Vocería ELMT, y está registrado en «Sin publicar».
+
 ### Pendiente
 
-- Diseñar la propuesta funcional de Comunicados y Novedades.
+- Incorporar los primeros avisos aprobados del Departamento ELMT y de la Vocería ELMT.
 - Revisar la experiencia de usuario en dispositivos móviles.
 - Validar la interfaz con usuarios estudiantes.
 - Incorporar ajustes visuales según feedback.

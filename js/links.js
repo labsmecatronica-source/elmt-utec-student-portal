@@ -7,14 +7,34 @@
  * Los procesos de Manufactura Digital se agregan en su arreglo `options`.
  */
 const SERVICE_CATEGORIES = Object.freeze([
-  Object.freeze({ id: "open-labs", title: "Open Labs" }),
-  Object.freeze({ id: "servicios", title: "Servicios" }),
-  Object.freeze({ id: "comunidad", title: "Comunidad" }),
   Object.freeze({
     id: "participacion-experiencia",
     title: "Participación y Experiencia",
+    placement: "notice-board",
   }),
+  Object.freeze({ id: "open-labs", title: "Open Labs" }),
+  Object.freeze({ id: "servicios", title: "Servicios" }),
+  Object.freeze({ id: "comunidad", title: "Comunidad" }),
   Object.freeze({ id: "recursos", title: "Recursos" }),
+]);
+
+// Publica avisos en el grupo correspondiente con title y body.
+// Puedes añadir date (AAAA-MM-DD), url (HTTPS) y action de forma opcional.
+const NOTICE_GROUPS = Object.freeze([
+  Object.freeze({
+    id: "departamento",
+    title: "Departamento ELMT",
+    description: "Personal del departamento",
+    icon: "building",
+    notices: Object.freeze([]),
+  }),
+  Object.freeze({
+    id: "voceria",
+    title: "Vocería ELMT",
+    description: "Representantes estudiantiles",
+    icon: "megaphone",
+    notices: Object.freeze([]),
+  }),
 ]);
 
 const SERVICES = Object.freeze([
@@ -109,16 +129,17 @@ const SERVICES = Object.freeze([
     category: "comunidad",
     title: "Comunicados y Novedades",
     description:
-      "Mantente informado sobre novedades y comunicaciones de los laboratorios.",
-    type: "Por definir",
+      "Consulta los avisos del Departamento ELMT y la Vocería ELMT.",
+    type: "Sección del portal",
     icon: "megaphone",
-    url: "",
-    active: false,
-    status: "Próximamente",
+    url: "#avisos",
+    active: true,
+    status: "Activo",
   }),
   Object.freeze({
     id: "mejora-continua",
     category: "participacion-experiencia",
+    noticeGroup: "departamento",
     title: "Buzón de Mejora Continua",
     description:
       "Comparte sugerencias y propuestas para contribuir a la mejora de los laboratorios y sus servicios.",
@@ -131,12 +152,26 @@ const SERVICES = Object.freeze([
   Object.freeze({
     id: "satisfaccion",
     category: "participacion-experiencia",
+    noticeGroup: "departamento",
     title: "Experiencia y Satisfacción",
     description:
       "Evalúa tu experiencia con los servicios e instalaciones de los laboratorios.",
     type: "Google Forms",
     icon: "star",
     url: "https://forms.gle/MguoEYNsqEcxe6Dz7",
+    active: true,
+    status: "Activo",
+  }),
+  Object.freeze({
+    id: "canal-confidencial",
+    category: "participacion-experiencia",
+    noticeGroup: "voceria",
+    title: "Canal Confidencial de Consultas, Sugerencias y Quejas MT",
+    description:
+      "Accede al formulario de consultas, sugerencias y quejas MT.",
+    type: "Google Forms",
+    icon: "lock",
+    url: "https://forms.gle/s9ozgWQ1koSDEbfGA",
     active: true,
     status: "Activo",
   }),
@@ -157,4 +192,5 @@ const SERVICES = Object.freeze([
 window.ELMT_PORTAL_CONFIG = Object.freeze({
   categories: SERVICE_CATEGORIES,
   services: SERVICES,
+  noticeGroups: NOTICE_GROUPS,
 });

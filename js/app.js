@@ -25,6 +25,10 @@ const ICON_PATHS = Object.freeze({
     '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path>',
   book:
     '<path d="M4 4h5a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H4V4ZM20 4h-5a3 3 0 0 0-3 3v14a3 3 0 0 1 3-3h5V4Z"></path>',
+  building:
+    '<path d="M4 21V3h12v18M2 21h20M16 9h4v12M8 7h.01M12 7h.01M8 11h.01M12 11h.01M8 15h.01M12 15h.01M8 21v-3h4v3"></path>',
+  lock:
+    '<rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"></path>',
 });
 
 const EXTERNAL_ARROW_ICON =
@@ -32,6 +36,9 @@ const EXTERNAL_ARROW_ICON =
 
 const PROCESS_CHEVRON_ICON =
   '<svg class="process-chevron" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m5 7.5 5 5 5-5"></path></svg>';
+
+const INTERNAL_ARROW_ICON =
+  '<svg class="card-action-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h12m-5-5 5 5-5 5"></path></svg>';
 
 function createElement(tagName, className, text) {
   const element = document.createElement(tagName);
@@ -57,17 +64,26 @@ function createIcon(iconName) {
   return icon;
 }
 
-function getExternalUrl(service) {
-  if (!service.active || typeof service.url !== "string" || !service.url.trim()) {
+function getHttpsUrl(value) {
+  if (typeof value !== "string" || !value.trim()) {
     return "";
   }
 
   try {
-    const url = new URL(service.url);
+    const url = new URL(value);
     return url.protocol === "https:" ? url.href : "";
   } catch {
     return "";
   }
+}
+
+function getExternalUrl(service) {
+  return service.active ? getHttpsUrl(service.url) : "";
+}
+
+function getInternalUrl(service) {
+  // Solo se admite este destino interno explícito, no URLs arbitrarias.
+  return service.active && service.url === "#avisos" ? "#avisos" : "";
 }
 
 function configureExternalLink(link, service, externalUrl, actionLabel) {
@@ -80,12 +96,14 @@ function configureExternalLink(link, service, externalUrl, actionLabel) {
   );
 }
 
-function createAction(className, label, isActive) {
+function createAction(className, label, isActive, isInternal = false) {
   const action = createElement("span", className, label);
 
   if (isActive) {
     const arrowTemplate = document.createElement("template");
-    arrowTemplate.innerHTML = EXTERNAL_ARROW_ICON;
+    arrowTemplate.innerHTML = isInternal
+      ? INTERNAL_ARROW_ICON
+      : EXTERNAL_ARROW_ICON;
     action.append(arrowTemplate.content.firstElementChild.cloneNode(true));
   }
 
@@ -151,7 +169,8 @@ function createCard(service) {
   const isGroup =
     service.active && Array.isArray(service.options) && service.options.length > 0;
   const externalUrl = getExternalUrl(service);
-  const isActive = Boolean(externalUrl);
+  const internalUrl = getInternalUrl(service);
+  const isActive = Boolean(externalUrl || internalUrl);
   const card = isGroup
     ? createElement("article", "service-card is-group")
     : isActive
@@ -161,7 +180,12 @@ function createCard(service) {
   card.dataset.serviceId = service.id;
 
   if (!isGroup && isActive) {
-    configureExternalLink(card, service, externalUrl, "Acceder");
+    if (internalUrl) {
+      card.setAttribute("href", internalUrl);
+      card.setAttribute("aria-label", `${service.title}. Ver cuadro de avisos.`);
+    } else {
+      configureExternalLink(card, service, externalUrl, "Acceder");
+    }
   } else if (!isGroup) {
     card.setAttribute("aria-disabled", "true");
   }
@@ -180,7 +204,12 @@ function createCard(service) {
     card.append(createProcessSelector(service.options));
   } else {
     card.append(
-      createAction("card-action", isActive ? "Acceder" : service.status, isActive),
+      createAction(
+        "card-action",
+        internalUrl ? "Ver avisos" : isActive ? "Acceder" : service.status,
+        isActive,
+        Boolean(internalUrl),
+      ),
     );
   }
 
@@ -216,14 +245,171 @@ function showConfigurationError(container) {
   container.replaceChildren(message);
 }
 
-function initializePortal() {
-  const container = document.getElementById("services-container");
+function createNoticeDate(value) {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return null;
+  }
+
+  const date = new Date(`${value}T00:00:00Z`);
+
+  if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) {
+    return null;
+  }
+
+  const label = new Intl.DateTimeFormat("es-PE", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+  const time = createElement("time", "notice-date", label);
+  time.dateTime = value;
+  return time;
+}
+
+function createNotice(notice) {
+  const item = createElement("li", "notice-item");
+  const date = createNoticeDate(notice.date);
+  const url = getHttpsUrl(notice.url);
+
+  if (date) {
+    item.append(date);
+  }
+
+  item.append(
+    createElement("h4", "notice-title", notice.title),
+    createElement("p", "notice-body", notice.body),
+  );
+
+  if (url) {
+    const action = notice.action || "Ver detalle";
+    const link = createElement("a", "notice-link");
+    configureExternalLink(
+      link,
+      { title: notice.title, description: notice.body || "" },
+      url,
+      action,
+    );
+    link.append(createAction("notice-action", action, true));
+    item.append(link);
+  }
+
+  return item;
+}
+
+function createNoticeGroup(group, services = []) {
+  const section = createElement("section", "notice-group");
+  const header = createElement("div", "notice-group-header");
+  const copy = createElement("div", "notice-group-copy");
+  const title = createElement("h3", "notice-group-title", group.title);
+  const headingId = `notice-group-${group.id}-title`;
+  const notices = Array.isArray(group.notices) ? group.notices : [];
+
+  section.dataset.noticeGroup = group.id;
+  title.id = headingId;
+  section.setAttribute("aria-labelledby", headingId);
+  copy.append(
+    title,
+    createElement("p", "notice-group-description", group.description),
+  );
+  header.append(createIcon(group.icon), copy);
+  section.append(header);
+
+  if (services.length > 0) {
+    const formList = createParticipationList(services);
+    formList.setAttribute("aria-label", `Formularios de ${group.title}`);
+    section.append(
+      createElement("p", "participation-intro", "Accesos directos a formularios"),
+      formList,
+    );
+  }
+
+  if (notices.length > 0) {
+    const list = createElement("ul", "notice-list");
+    notices.forEach((notice) => list.append(createNotice(notice)));
+    section.append(list);
+  } else {
+    section.append(
+      createElement("p", "notice-empty", "Aún no hay avisos publicados."),
+    );
+  }
+
+  return section;
+}
+
+function initializeNotices(config) {
+  const container = document.getElementById("notice-groups");
 
   if (!container) {
     return;
   }
 
+  const groups = config && Array.isArray(config.noticeGroups)
+    ? config.noticeGroups
+    : [];
+  const fragment = document.createDocumentFragment();
+  const boardCategories = config && Array.isArray(config.categories)
+    ? config.categories
+        .filter((category) => category.placement === "notice-board")
+        .map((category) => category.id)
+    : [];
+  const boardServices = config && Array.isArray(config.services)
+    ? config.services.filter((service) => boardCategories.includes(service.category))
+    : [];
+
+  if (groups.length > 0) {
+    groups.forEach((group) => {
+      const services = boardServices.filter((service) => service.noticeGroup === group.id);
+      fragment.append(createNoticeGroup(group, services));
+    });
+  } else {
+    fragment.append(
+      createElement("p", "notice-empty", "Aún no hay avisos publicados."),
+    );
+  }
+
+  container.replaceChildren(fragment);
+}
+
+function createParticipationList(services) {
+  const list = createElement("ul", "participation-list");
+
+  services.forEach((service) => {
+    const url = getExternalUrl(service);
+    const item = createElement("li");
+    const link = createElement(
+      url ? "a" : "div",
+      `participation-link ${url ? "is-active" : "is-upcoming"}`,
+    );
+    link.dataset.serviceId = service.id;
+
+    if (url) {
+      configureExternalLink(link, service, url, "Abrir formulario");
+    } else {
+      link.setAttribute("aria-disabled", "true");
+    }
+
+    link.append(
+      createIcon(service.icon),
+      createElement("span", "participation-label", service.title),
+      createAction("participation-action", url ? "" : service.status, Boolean(url)),
+    );
+    item.append(link);
+    list.append(item);
+  });
+
+  return list;
+}
+
+function initializePortal() {
   const config = window.ELMT_PORTAL_CONFIG;
+  const container = document.getElementById("services-container");
+
+  initializeNotices(config);
+
+  if (!container) {
+    return;
+  }
 
   if (
     !config ||
@@ -237,6 +423,10 @@ function initializePortal() {
   const fragment = document.createDocumentFragment();
 
   config.categories.forEach((category) => {
+    if (category.placement === "notice-board") {
+      return;
+    }
+
     const categoryServices = config.services.filter(
       (service) => service.category === category.id,
     );
