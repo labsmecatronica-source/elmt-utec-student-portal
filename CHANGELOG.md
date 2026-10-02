@@ -15,6 +15,10 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 - 2026-10-02: El texto de la cabecera empieza a la altura del cuadro «Avisos y participación», y Utechie termina a la altura de su borde inferior, para que ambas columnas queden simétricas. El cuadro conserva su altura natural en lugar de estirarse si la otra columna es más alta.
 
+### Corregido
+
+- 2026-10-02: Versionado de las URLs de `css/styles.css`, `js/links.js`, `js/app.js` y `js/mascot.js` mediante `?v=20261002-1` en `index.html`, para evitar la reutilización de estilos o scripts anteriores al publicar cambios. La captura de Utechie sin estilos es compatible con CSS antiguo, aunque los archivos publicados ya coincidían con los locales al revisarlos. Se documenta actualizar los cuatro valores juntos antes de cada nueva publicación con cambios de CSS/JS y utilizar `Ctrl + F5` como diagnóstico temporal.
+
 ### Eliminado
 
 - 2026-10-02: `assets/utechie.mp4`, el video original de 25 segundos, que no se utilizaba en el portal.

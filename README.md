@@ -267,6 +267,10 @@ El proyecto está preparado para ejecutarse como un sitio estático mediante Git
 
 Cuando decidas publicar los cambios:
 
+Si modificaste CSS o JavaScript, antes de cada nueva publicación actualiza **juntos los cuatro valores `v`** de `index.html`: los de `css/styles.css`, `js/links.js`, `js/app.js` y `js/mascot.js`. Usa fecha y revisión, por ejemplo, `?v=20261002-1`; para otra publicación del mismo día, `?v=20261002-2`. Esto cambia las URLs de los recursos para evitar que el HTML nuevo reutilice estilos o scripts anteriores guardados en caché; no cambia la versión visible del portal.
+
+Si tras publicar aparece una interfaz desordenada, `Ctrl + F5` sirve como comprobación temporal para forzar la recarga. La captura de Utechie con el brazo separado y un botón gris es compatible con CSS anterior aplicado al HTML nuevo; en la revisión del 2026-10-02, los archivos publicados ya coincidían con los locales. El versionado de recursos evita depender de que cada visitante recargue manualmente.
+
 1. En GitHub Desktop, selecciona el repositorio `elmt-utec-student-portal` y confirma que **Current branch** sea `main`.
 2. Revisa los archivos en **Changes** y selecciona los cambios que deseas publicar. Escribe un resumen, por ejemplo, `Activa talleres y actualiza servicios del portal`, y pulsa **Commit to main**. Esto guarda los cambios en el repositorio local.
 3. Pulsa **Push origin** para subir los commits a GitHub.
