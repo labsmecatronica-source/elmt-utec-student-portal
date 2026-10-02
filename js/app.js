@@ -40,6 +40,23 @@ const PROCESS_CHEVRON_ICON =
 const INTERNAL_ARROW_ICON =
   '<svg class="card-action-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h12m-5-5 5 5-5 5"></path></svg>';
 
+const UNAVAILABLE_LABEL = "No disponible";
+
+function hasText(value) {
+  return typeof value === "string" && value.trim() !== "";
+}
+
+function warnConfiguration(message) {
+  console.warn(`[Portal ELMT] ${message}`);
+}
+
+// Un registro sin enlace válido nunca se presenta como «Activo».
+function getUnavailableLabel(item) {
+  return hasText(item.status) && item.status !== "Activo"
+    ? item.status
+    : UNAVAILABLE_LABEL;
+}
+
 function createElement(tagName, className, text) {
   const element = document.createElement(tagName);
 
@@ -92,7 +109,13 @@ function configureExternalLink(link, service, externalUrl, actionLabel) {
   link.setAttribute("rel", "noopener noreferrer");
   link.setAttribute(
     "aria-label",
-    `${service.title}. ${service.description} ${actionLabel}; se abre en una pestaña nueva.`,
+    [
+      `${service.title}.`,
+      service.description,
+      `${actionLabel}; se abre en una pestaña nueva.`,
+    ]
+      .filter(hasText)
+      .join(" "),
   );
 }
 
@@ -132,7 +155,7 @@ function createProcessOption(process) {
     createElement("span", "process-description", process.description),
     createAction(
       "process-action",
-      isActive ? actionLabel : process.status,
+      isActive ? actionLabel : getUnavailableLabel(process),
       isActive,
     ),
   );
@@ -147,7 +170,7 @@ function createProcessSelector(options) {
   const list = createElement("ul", "process-list");
   const chevronTemplate = document.createElement("template");
 
-  selector.open = true;
+  // Plegado por defecto para que la tarjeta tenga el tamaño de las demás.
   chevronTemplate.innerHTML = PROCESS_CHEVRON_ICON;
   summary.append(
     createElement("span", "", "Procesos disponibles"),
@@ -206,7 +229,11 @@ function createCard(service) {
     card.append(
       createAction(
         "card-action",
-        internalUrl ? "Ver avisos" : isActive ? "Acceder" : service.status,
+        internalUrl
+          ? "Ver avisos"
+          : isActive
+            ? "Acceder"
+            : getUnavailableLabel(service),
         isActive,
         Boolean(internalUrl),
       ),
@@ -235,17 +262,13 @@ function createCategory(category, services) {
   return section;
 }
 
-function showConfigurationError(container) {
-  const message = createElement(
-    "p",
-    "services-error",
-    "No fue posible cargar los servicios. Inténtalo nuevamente más tarde.",
-  );
+function showConfigurationError(container, className, text) {
+  const message = createElement("p", className, text);
   message.setAttribute("role", "alert");
   container.replaceChildren(message);
 }
 
-function createNoticeDate(value) {
+function parseNoticeDate(value) {
   if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     return null;
   }
@@ -253,6 +276,20 @@ function createNoticeDate(value) {
   const date = new Date(`${value}T00:00:00Z`);
 
   if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) {
+    return null;
+  }
+
+  return date;
+}
+
+function isPublishableNotice(notice) {
+  return Boolean(notice) && hasText(notice.title);
+}
+
+function createNoticeDate(value) {
+  const date = parseNoticeDate(value);
+
+  if (!date) {
     return null;
   }
 
@@ -276,10 +313,11 @@ function createNotice(notice) {
     item.append(date);
   }
 
-  item.append(
-    createElement("h4", "notice-title", notice.title),
-    createElement("p", "notice-body", notice.body),
-  );
+  item.append(createElement("h4", "notice-title", notice.title));
+
+  if (hasText(notice.body)) {
+    item.append(createElement("p", "notice-body", notice.body));
+  }
 
   if (url) {
     const action = notice.action || "Ver detalle";
@@ -303,7 +341,9 @@ function createNoticeGroup(group, services = []) {
   const copy = createElement("div", "notice-group-copy");
   const title = createElement("h3", "notice-group-title", group.title);
   const headingId = `notice-group-${group.id}-title`;
-  const notices = Array.isArray(group.notices) ? group.notices : [];
+  const notices = Array.isArray(group.notices)
+    ? group.notices.filter(isPublishableNotice)
+    : [];
 
   section.dataset.noticeGroup = group.id;
   title.id = headingId;
@@ -344,16 +384,23 @@ function initializeNotices(config) {
     return;
   }
 
-  const groups = config && Array.isArray(config.noticeGroups)
-    ? config.noticeGroups
-    : [];
+  if (!config || !Array.isArray(config.noticeGroups)) {
+    showConfigurationError(
+      container,
+      "notice-error",
+      "No fue posible cargar los avisos ni los formularios de participación. Inténtalo nuevamente más tarde.",
+    );
+    return;
+  }
+
+  const groups = config.noticeGroups;
   const fragment = document.createDocumentFragment();
-  const boardCategories = config && Array.isArray(config.categories)
+  const boardCategories = Array.isArray(config.categories)
     ? config.categories
         .filter((category) => category.placement === "notice-board")
         .map((category) => category.id)
     : [];
-  const boardServices = config && Array.isArray(config.services)
+  const boardServices = Array.isArray(config.services)
     ? config.services.filter((service) => boardCategories.includes(service.category))
     : [];
 
@@ -392,13 +439,113 @@ function createParticipationList(services) {
     link.append(
       createIcon(service.icon),
       createElement("span", "participation-label", service.title),
-      createAction("participation-action", url ? "" : service.status, Boolean(url)),
+      createAction(
+        "participation-action",
+        url ? "" : getUnavailableLabel(service),
+        Boolean(url),
+      ),
     );
     item.append(link);
     list.append(item);
   });
 
   return list;
+}
+
+function isRecord(value) {
+  return typeof value === "object" && value !== null;
+}
+
+function isProvided(value) {
+  return value !== undefined && value !== null && value !== "";
+}
+
+// Los problemas de registros individuales no se muestran a los estudiantes: se
+// informan en la consola del navegador para detectarlos al revisar localmente.
+function reportConfigurationIssues(config) {
+  const categories = config.categories.filter(isRecord);
+  const categoryIds = new Set(categories.map((category) => category.id));
+  const boardCategoryIds = new Set(
+    categories
+      .filter((category) => category.placement === "notice-board")
+      .map((category) => category.id),
+  );
+  const groups = Array.isArray(config.noticeGroups)
+    ? config.noticeGroups.filter(isRecord)
+    : [];
+  const groupIds = new Set(groups.map((group) => group.id));
+  const unavailable = "no se presentará como acceso";
+
+  config.services.filter(isRecord).forEach((service) => {
+    if (!categoryIds.has(service.category)) {
+      warnConfiguration(
+        `El servicio "${service.id}" usa la categoría "${service.category}", que no existe; no se mostrará.`,
+      );
+      return;
+    }
+
+    if (
+      boardCategoryIds.has(service.category) &&
+      !groupIds.has(service.noticeGroup)
+    ) {
+      warnConfiguration(
+        `El servicio "${service.id}" usa el noticeGroup "${service.noticeGroup}", que no existe; no se mostrará.`,
+      );
+      return;
+    }
+
+    if (!service.active) {
+      return;
+    }
+
+    if (Array.isArray(service.options) && service.options.length > 0) {
+      service.options.filter(isRecord).forEach((process) => {
+        if (process.active && !getExternalUrl(process)) {
+          warnConfiguration(
+            `El proceso "${process.id}" de "${service.id}" está activo, pero no tiene una URL HTTPS válida; ${unavailable}.`,
+          );
+        }
+      });
+    } else if (!getExternalUrl(service) && !getInternalUrl(service)) {
+      warnConfiguration(
+        Array.isArray(service.options)
+          ? `El servicio "${service.id}" está activo, pero su arreglo options está vacío y no tiene una URL HTTPS válida; ${unavailable}.`
+          : `El servicio "${service.id}" está activo, pero no tiene una URL HTTPS válida; ${unavailable}.`,
+      );
+    }
+  });
+
+  groups.forEach((group) => {
+    if (isProvided(group.notices) && !Array.isArray(group.notices)) {
+      warnConfiguration(
+        `La propiedad notices del grupo "${group.id}" debe ser un arreglo; sus avisos no se mostrarán.`,
+      );
+      return;
+    }
+
+    const notices = Array.isArray(group.notices) ? group.notices : [];
+
+    notices.forEach((notice, index) => {
+      const label = `El aviso ${index + 1} del grupo "${group.id}"`;
+
+      if (!isPublishableNotice(notice)) {
+        warnConfiguration(`${label} no tiene title; se omitirá.`);
+        return;
+      }
+
+      if (isProvided(notice.date) && !parseNoticeDate(notice.date)) {
+        warnConfiguration(
+          `${label} tiene una fecha inválida (usa el texto "AAAA-MM-DD", entre comillas); se publicará sin fecha.`,
+        );
+      }
+
+      if (isProvided(notice.url) && !getHttpsUrl(notice.url)) {
+        warnConfiguration(
+          `${label} tiene una URL que no es HTTPS; se publicará sin enlace.`,
+        );
+      }
+    });
+  });
 }
 
 function initializePortal() {
@@ -416,7 +563,11 @@ function initializePortal() {
     !Array.isArray(config.categories) ||
     !Array.isArray(config.services)
   ) {
-    showConfigurationError(container);
+    showConfigurationError(
+      container,
+      "services-error",
+      "No fue posible cargar los servicios. Inténtalo nuevamente más tarde.",
+    );
     return;
   }
 
@@ -437,6 +588,13 @@ function initializePortal() {
   });
 
   container.replaceChildren(fragment);
+
+  // El diagnóstico se ejecuta después del renderizado y nunca debe impedirlo.
+  try {
+    reportConfigurationIssues(config);
+  } catch (error) {
+    warnConfiguration(`No fue posible revisar la configuración: ${error.message}`);
+  }
 }
 
 if (document.readyState === "loading") {

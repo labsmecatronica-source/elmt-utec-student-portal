@@ -307,6 +307,11 @@ svg {
   gap: 14px;
 }
 
+.notice-groups > .notice-empty,
+.notice-groups > .notice-error {
+  grid-column: 1 / -1;
+}
+
 .notice-group {
   min-width: 0;
   padding: 18px;
@@ -738,7 +743,8 @@ svg {
 }
 
 .noscript-message,
-.services-error {
+.services-error,
+.notice-error {
   margin: 0;
   padding: 18px;
   border: 1px solid var(--color-accent);

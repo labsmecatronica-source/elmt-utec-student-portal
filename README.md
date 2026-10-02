@@ -23,7 +23,7 @@ Portal de Servicios ELMT
 Google Sheets / Google Forms / Apps Script / futuros servicios
 ```
 
-GitHub Pages funciona actualmente como la capa de presentación y acceso centralizado. El portal no almacena los datos de los servicios ni requiere un backend propio: cada acceso externo activo se abre en una pestaña nueva y continúa operando en la plataforma correspondiente. Manufactura Digital despliega un catálogo de procesos dentro del portal; actualmente contiene Impresión 3D y Fabricación de PCB.
+GitHub Pages funciona actualmente como la capa de presentación y acceso centralizado. El portal no almacena los datos de los servicios ni requiere un backend propio: cada acceso externo activo se abre en una pestaña nueva y continúa operando en la plataforma correspondiente. La página es pública, pero los servicios enlazados de Google solicitan iniciar sesión con el correo institucional de UTEC: el control de acceso lo realiza cada servicio, no el portal. Manufactura Digital despliega un catálogo de procesos dentro del portal; actualmente contiene Impresión 3D y Fabricación de PCB.
 
 La cabecera incluye el cuadro «Avisos y participación», organizado en dos espacios que reúnen sus propios accesos directos a Google Forms y avisos. Departamento ELMT, correspondiente al personal del departamento, contiene Buzón de Mejora Continua y Experiencia y Satisfacción. Vocería ELMT, correspondiente a los representantes estudiantiles e identificada con un icono de megáfono, contiene únicamente el Canal Confidencial de Consultas, Sugerencias y Quejas MT. No hay un bloque independiente de Participación y Experiencia encima de estos espacios. Comunicados y Novedades conduce a este cuadro dentro de la misma página, sin abrir otra pestaña. Los formularios no se duplican en el directorio, que comienza con Open Labs.
 
@@ -39,7 +39,7 @@ La cabecera incluye el cuadro «Avisos y participación», organizado en dos esp
 | Servicios | Manufactura Digital | Catálogo de procesos | Activo |
 | Servicios | Préstamo de Equipos y Componentes | Google Forms | Activo |
 | Comunidad | Talleres y Capacitaciones | Página web (GitHub Pages) | Activo |
-| Comunidad | Comunicados y Novedades | Cuadro de avisos (acceso interno) | Activo |
+| Comunidad | Comunicados y Novedades | Sección del portal | Activo |
 | Recursos | Manuales y Guías Técnicas de Equipamiento | Google Drive | Activo |
 
 ## Enlaces de acceso rápido
@@ -140,6 +140,14 @@ status: "Activo"
 
 Mientras un servicio no esté disponible, debe conservar una URL vacía, `active: false` y el estado `"Próximamente"`.
 
+La propiedad `type` es descriptiva: documenta la plataforma de cada servicio, pero no se muestra en la interfaz.
+
+Un servicio, proceso o formulario solo se presenta como acceso si tiene `active: true` y una URL HTTPS válida (o `"#avisos"` en Comunicados y Novedades). La excepción es un servicio con procesos en `options`, como Manufactura Digital: se presenta como catálogo y no necesita `url`. Un registro sin enlace válido nunca aparece como «Activo»: muestra su `status` si es distinto de «Activo» (por ejemplo, «Próximamente») o, en caso contrario, «No disponible».
+
+Al revisar los cambios localmente, abre la consola del navegador (F12 → Console). El portal escribe allí advertencias que comienzan con `[Portal ELMT]` cuando un registro no se mostrará como se espera: una categoría o un `noticeGroup` que no existe, un servicio o proceso activo sin URL válida, un catálogo sin procesos ni URL, una propiedad `notices` que no es un arreglo o un aviso sin título, con una fecha inválida o con un enlace que no es HTTPS. Los estudiantes no ven estas advertencias.
+
+Un error de sintaxis en `js/links.js` (por ejemplo, una coma o una comilla faltante) impide cargar toda la configuración: la consola muestra un `SyntaxError`, no una advertencia `[Portal ELMT]`, y la página indica que no fue posible cargar los avisos ni los servicios. Revisa siempre la página localmente antes de publicar.
+
 La categoría `participacion-experiencia` tiene `placement: "notice-board"` para mostrar sus accesos en el cuadro superior. Cada formulario usa `noticeGroup` para indicar el espacio que lo contiene: `"departamento"` para Buzón de Mejora Continua y Experiencia y Satisfacción, o `"voceria"` para el Canal Confidencial de Consultas, Sugerencias y Quejas MT. Sus enlaces siguen configurándose en `services`, dentro de `js/links.js`; no deben copiarse a los arreglos de avisos ni al HTML. Los accesos se presentan de forma compacta dentro de su grupo y abren directamente cada formulario en una pestaña nueva.
 
 ### Procesos de Manufactura Digital
@@ -160,7 +168,7 @@ El módulo con `id: "manufactura-digital"` contiene un arreglo `options` en `js/
 }
 ```
 
-Para añadir un proceso, agrega otro registro con estas mismas propiedades dentro de `options`, usando un `id` único, su nombre, descripción, tipo de servicio, icono disponible y enlace. El catálogo se genera automáticamente sin editar el HTML. Los demás servicios conservan su configuración habitual; `js/links.js` sigue siendo la única fuente de enlaces utilizada por la interfaz.
+Para añadir un proceso, agrega otro registro con estas mismas propiedades dentro de `options`, usando un `id` único, su nombre, descripción, tipo de servicio, icono disponible y enlace. El catálogo se genera automáticamente sin editar el HTML. Se muestra plegado, con el mismo tamaño que las demás tarjetas, y sus procesos se despliegan al pulsar «Procesos disponibles». Los demás servicios conservan su configuración habitual; `js/links.js` sigue siendo la única fuente de enlaces utilizada por la interfaz.
 
 La propiedad opcional `action` personaliza el texto de acceso de cada proceso; si se omite, se muestra «Acceder».
 
@@ -182,7 +190,19 @@ Para publicar, añade un registro al arreglo `notices` del grupo correspondiente
 }
 ```
 
-Opcionalmente, agrega `date` con una fecha en formato `YYYY-MM-DD`, `url` con un enlace HTTPS y `action` con el texto de ese enlace. Los avisos pueden publicarse sin fecha ni enlace. El orden dentro de `notices` determina el orden de presentación; para retirar un aviso, elimina su registro.
+`title` es obligatorio: un aviso sin título se omite. `body` es recomendable, pero un aviso puede publicarse solo con su título. Opcionalmente, agrega `date` con una fecha en formato `YYYY-MM-DD` escrita entre comillas, `url` con un enlace HTTPS y `action` con el texto de ese enlace:
+
+```js
+{
+  title: "Título del aviso aprobado",
+  body: "Contenido del aviso aprobado para su publicación.",
+  date: "2026-10-02",
+  url: "https://www.utec.edu.pe/",
+  action: "Ver detalle"
+}
+```
+
+Los avisos pueden publicarse sin fecha ni enlace; una fecha inválida o un enlace que no sea HTTPS se omiten y generan una advertencia en la consola del navegador. Una fecha sin comillas, como `date: 2026-10-02`, puede provocar un error de sintaxis que impide cargar todo el portal. El orden dentro de `notices` determina el orden de presentación; para retirar un aviso, elimina su registro.
 
 Revisa los cambios localmente y sigue los pasos de Publicación cuando estén aprobados. No hay panel de edición, inicio de sesión, sincronización automática ni roles de administración dentro del portal: los dos grupos distinguen el origen de las comunicaciones, no conceden permisos. La edición se controla mediante los permisos del repositorio y los avisos publicados son visibles para todos los visitantes.
 
@@ -215,6 +235,8 @@ El repositorio puede contener URLs públicas o institucionales destinadas al acc
 
 Los controles de acceso institucional se realizan desde Google u otros servicios externos. Ocultar una URL en GitHub no constituye un mecanismo de seguridad.
 
+Los enlaces para compartir de Google pueden terminar en `/edit?usp=sharing` aunque el archivo esté compartido como solo lectura: el permiso depende de la configuración para compartir del archivo, no de la forma de la URL. El Google Sheets de Disponibilidad y Horarios está compartido como solo lectura. Antes de añadir otro enlace de Sheets o Drive, confirma en **Compartir** que los estudiantes tengan el rol de lector.
+
 ## Publicación
 
 El proyecto está preparado para ejecutarse como un sitio estático mediante GitHub Pages. Los archivos se publican directamente desde la raíz de la rama `main`; no requiere instalar dependencias, ejecutar un build local ni mantener un servidor de aplicación.
@@ -235,4 +257,4 @@ Una vez configurado, cada nuevo push a `main` actualizará el sitio mediante un 
 
 Estos pasos siguen la [guía oficial de GitHub para configurar la fuente de publicación de GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
-No se documenta una URL de producción hasta que la publicación haya sido habilitada y verificada.
+El portal está publicado en <https://labsmecatronica-source.github.io/elmt-utec-student-portal/>.

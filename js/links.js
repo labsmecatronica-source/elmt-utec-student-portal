@@ -19,7 +19,8 @@ const SERVICE_CATEGORIES = Object.freeze([
 ]);
 
 // Publica avisos en el grupo correspondiente con title y body.
-// Puedes añadir date (AAAA-MM-DD), url (HTTPS) y action de forma opcional.
+// Puedes añadir date ("AAAA-MM-DD", entre comillas), url (HTTPS) y action de
+// forma opcional.
 const NOTICE_GROUPS = Object.freeze([
   Object.freeze({
     id: "departamento",

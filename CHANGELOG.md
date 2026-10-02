@@ -6,8 +6,13 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ## Sin publicar
 
+Sin cambios pendientes.
+
+## [0.2.0] - 2026-10-02
+
 ### Añadido
 
+- 2026-10-02: Advertencias en la consola del navegador, con el prefijo `[Portal ELMT]`, cuando un registro de `js/links.js` no se mostrará como se espera: categoría o `noticeGroup` inexistente, servicio o proceso activo sin URL HTTPS válida, catálogo sin procesos ni URL, `notices` que no es un arreglo, aviso sin título, fecha inválida o enlace que no es HTTPS. Los estudiantes no ven estas advertencias, y su revisión se ejecuta después de mostrar la página, sin poder interrumpirla.
 - 2026-09-15: Integración de Cloudflare Web Analytics en `index.html` para medir visitas y páginas vistas, sin cambios visuales ni seguimiento específico de clics o respuestas de formularios. La recepción de métricas debe verificarse en Cloudflare después de publicar; se documentan su alcance y las limitaciones de validación local.
 - 2026-09-15: Cuadro de avisos en la cabecera con espacios para Departamento ELMT (personal del departamento) y Vocería ELMT (representantes estudiantiles), configurables manualmente desde `noticeGroups` en `js/links.js` e inicialmente sin avisos publicados.
 - 2026-09-15: Incorporación del Canal Confidencial de Consultas, Sugerencias y Quejas MT a Participación y Experiencia: <https://forms.gle/s9ozgWQ1koSDEbfGA>.
@@ -15,9 +20,10 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ### Modificado
 
-- 2026-09-15: Distribución de los formularios dentro de cada espacio de «Avisos y participación»: Departamento ELMT contiene Buzón de Mejora Continua y Experiencia y Satisfacción; Vocería ELMT contiene únicamente el Canal Confidencial de Consultas, Sugerencias y Quejas MT y se identifica con un icono de megáfono. Se elimina el bloque independiente sobre los grupos. La asignación se configura mediante `noticeGroup` en cada servicio, conservando `placement: "notice-board"`, las URLs centralizadas y los arreglos de avisos separados.
-- 2026-09-15: Reubicación de los tres accesos de Participación y Experiencia dentro de la parte superior del cuadro «Avisos y participación», encima de Departamento ELMT y Vocería ELMT, con enlace directo a cada formulario. Se retiran del directorio para evitar duplicados; Open Labs vuelve a ser su primera categoría. La ubicación se configura mediante `placement: "notice-board"` y los enlaces permanecen centralizados en `services` de `js/links.js`.
-- 2026-09-15: Ubicación de Participación y Experiencia como primera categoría del directorio.
+- 2026-10-02: Versión visible actualizada a 0.2.0 en la cabecera y el footer.
+- 2026-10-02: El catálogo de Manufactura Digital se muestra plegado al cargar la página, con el mismo tamaño que las demás tarjetas; sus procesos se despliegan al pulsar «Procesos disponibles».
+- 2026-10-02: Actualización de la documentación: URL de producción del portal, acceso con el correo institucional a los servicios enlazados de Google, formato de fecha de los avisos entre comillas, efecto de un error de sintaxis en `js/links.js`, permisos de solo lectura de los enlaces de Google que terminan en `/edit?usp=sharing`, carácter descriptivo de `type`, requisitos de los avisos y revisión de advertencias en la consola.
+- 2026-09-15: Traslado de los tres formularios de Participación y Experiencia desde el directorio al cuadro «Avisos y participación», con enlace directo a cada uno. Departamento ELMT contiene Buzón de Mejora Continua y Experiencia y Satisfacción; Vocería ELMT contiene únicamente el Canal Confidencial de Consultas, Sugerencias y Quejas MT y se identifica con un icono de megáfono. Los formularios se retiran del directorio para evitar duplicados, por lo que Open Labs vuelve a ser su primera categoría. La ubicación se configura con `placement: "notice-board"` en la categoría y `noticeGroup` en cada servicio; las URLs permanecen centralizadas en `services` de `js/links.js` y los arreglos de avisos se mantienen separados. Ese mismo día se descartaron dos ubicaciones intermedias: Participación y Experiencia como primera categoría del directorio y un bloque independiente encima de ambos espacios.
 - 2026-09-15: Activación de Comunicados y Novedades como acceso interno a `#avisos`, sin abrir una nueva pestaña.
 - 2026-09-15: Documentación del mantenimiento manual de los avisos, la separación por origen sin roles de edición y la distinción entre comunicaciones públicas y consultas enviadas a formularios externos.
 - 2026-09-05: Actualización de la denominación institucional a Laboratorios del Departamento de Electrónica y Mecatrónica de UTEC y uso del plural en los textos vigentes del portal, incluido Registro de Uso de Laboratorios.
@@ -27,6 +33,20 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 - 2026-09-05: Ampliación de la documentación para publicar el portal desde `main` y `/(root)` mediante GitHub Desktop y GitHub Pages.
 - 2026-09-05: Activación del Buzón de Mejora Continua ELMT con el enlace definitivo: <https://forms.gle/pru5PSTj8Z2nbuSr7>.
 - 2026-09-05: Activación de Experiencia y Satisfacción con el enlace definitivo a la encuesta de satisfacción de estudiantes de los Laboratorios del Departamento de Electrónica y Mecatrónica: <https://forms.gle/MguoEYNsqEcxe6Dz7>.
+
+### Corregido
+
+- 2026-10-02: Si no carga la configuración, el cuadro de avisos muestra un mensaje de error. Antes indicaba «Aún no hay avisos publicados» y ocultaba los formularios de participación.
+- 2026-10-02: Un servicio, proceso o formulario sin enlace válido, o un catálogo sin procesos ni URL, ya no se presenta como «Activo»: muestra su estado configurado si es distinto de «Activo» o, en caso contrario, «No disponible». Antes podía aparecer como una tarjeta deshabilitada con el estado «Activo».
+- 2026-10-02: Los avisos sin título se omiten y los avisos sin cuerpo ya no generan un párrafo vacío.
+- 2026-10-02: Al cargar la página, la tarjeta vecina del catálogo de Manufactura Digital ya no se estira hasta la altura del catálogo abierto, que dejaba un espacio vacío en pantallas anchas.
+- 2026-10-02: Los mensajes de error y de «Aún no hay avisos publicados» del cuadro de avisos ocupan todo su ancho cuando los grupos se muestran en dos columnas.
+- 2026-10-02: Unificación del tipo de Comunicados y Novedades («Sección del portal») entre `README.md` y `js/links.js`.
+
+### Decisiones relevantes
+
+- La página es pública; los servicios enlazados de Google (Forms, Sheets y Drive) controlan el acceso y solicitan el correo institucional de UTEC.
+- Los problemas en registros individuales de `js/links.js` se informan en la consola del navegador para quien mantiene el portal, sin mostrarlos a los estudiantes. Si la configuración no carga, la página muestra un aviso de error.
 
 ## [0.1.0] - 2026-09-04
 
@@ -76,19 +96,14 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 - Los enlaces se gestionarán centralizadamente desde `js/links.js`.
 - Para horarios se utilizará actualmente Google Sheets en lugar de la Web App de Apps Script.
 
-## Próxima versión prevista — v0.2.0
+## Próxima versión prevista — v0.3.0
 
-La incorporación de los enlaces definitivos de Experiencia y Satisfacción y del Buzón de Mejora Continua se completó el 2026-09-05 y está registrada en «Sin publicar».
-
-Talleres y Capacitaciones se resolvió mediante una página externa, integrada al portal el 2026-09-05 y registrada en «Sin publicar».
-
-Recursos y Documentación Técnica se resolvió mediante una carpeta externa de Google Drive, integrada al portal el 2026-09-05 como Manuales y Guías Técnicas de Equipamiento y registrada en «Sin publicar».
-
-Comunicados y Novedades se resolvió mediante un cuadro de avisos dentro del portal el 2026-09-15, con espacios para Departamento ELMT y Vocería ELMT, y está registrado en «Sin publicar».
+Los pendientes de v0.2.0 resueltos (enlaces definitivos de los formularios de participación, Talleres y Capacitaciones, Manuales y Guías Técnicas de Equipamiento y Comunicados y Novedades) están registrados en [0.2.0].
 
 ### Pendiente
 
 - Incorporar los primeros avisos aprobados del Departamento ELMT y de la Vocería ELMT.
+- Evaluar la gestión de los avisos desde Google Sheets mediante Apps Script, para publicarlos sin editar el repositorio.
 - Revisar la experiencia de usuario en dispositivos móviles.
 - Validar la interfaz con usuarios estudiantes.
 - Incorporar ajustes visuales según feedback.
