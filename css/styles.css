@@ -154,16 +154,20 @@ svg {
   background: linear-gradient(110deg, var(--color-brand), var(--color-brand-aqua));
 }
 
+/* Ambas columnas se estiran a la misma altura: el texto empieza a la altura
+   del cuadro de avisos y Utechie termina a la altura de su borde inferior. */
 .hero-content {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(340px, 1fr);
-  align-items: center;
+  align-items: stretch;
   gap: clamp(32px, 4vw, 56px);
   padding-block: clamp(56px, 6vw, 80px);
 }
 
 .hero-copy {
+  display: flex;
   min-width: 0;
+  flex-direction: column;
 }
 
 .eyebrow,
@@ -211,8 +215,134 @@ svg {
   font-size: 1rem;
 }
 
+.mascot {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.mascot-button {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-medium);
+  color: inherit;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mascot-figure {
+  position: relative;
+  display: block;
+  width: clamp(150px, 26vw, 250px);
+  flex: 0 0 auto;
+  aspect-ratio: 560 / 626;
+}
+
+/* Dos capas del mismo tamaño: el brazo (detrás) y el cuerpo (delante). */
+.mascot-arm,
+.mascot-body {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* El brazo gira alrededor del hombro, en (372, 380) de la imagen de 560 × 626. */
+.mascot-arm {
+  transform-origin: 66.43% 60.7%;
+}
+
+/* Cada saludo son dos movimientos del brazo, que vuelve a la pose inicial. */
+.mascot-button.is-waving .mascot-arm {
+  animation: mascot-wave 667ms ease-in-out 2;
+}
+
+@keyframes mascot-wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(26deg);
+  }
+}
+
+.mascot-bubble {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  margin-top: 6%;
+  padding: 12px 16px;
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  box-shadow: 0 10px 24px rgba(35, 31, 32, 0.12);
+  font-size: 0.9rem;
+  line-height: 1.35;
+  transition: transform 180ms ease;
+}
+
+/* Cola del globo, orientada hacia Utechie. */
+.mascot-bubble::before {
+  position: absolute;
+  top: 18px;
+  left: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--color-surface);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.mascot-bubble strong {
+  font-weight: 800;
+}
+
+.mascot-bubble span {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+/* Ambos textos ocupan la misma celda, así el globo no cambia de ancho (ni
+   desplaza a Utechie) cuando responde al saludo. */
+.mascot-hint {
+  display: grid;
+}
+
+.mascot-hint > span {
+  grid-area: 1 / 1;
+  transition: none;
+}
+
+.mascot-bubble .mascot-hint-thanks {
+  font-weight: 700;
+}
+
+.mascot-hint-thanks,
+.mascot-button.is-thanking .mascot-hint-default {
+  visibility: hidden;
+}
+
+.mascot-button.is-thanking .mascot-hint-thanks {
+  visibility: visible;
+}
+
+.mascot-button:hover .mascot-bubble {
+  transform: translateY(-2px);
+}
+
+/* No se estira: si la columna de Utechie fuera más alta, la tarjeta conserva
+   su altura en lugar de mostrar una franja blanca vacía. */
 .notice-board {
   min-width: 0;
+  align-self: start;
   padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: var(--radius-large);
@@ -932,5 +1062,12 @@ svg {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  /* Con movimiento reducido, Utechie no saluda solo; si se le hace clic, el
+     saludo pedido se muestra completo. */
+  .mascot-button.is-waving .mascot-arm {
+    animation-duration: 667ms !important;
+    animation-iteration-count: 2 !important;
   }
 }

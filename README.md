@@ -108,23 +108,47 @@ La referencia se mantiene porque la Web App podría utilizarse nuevamente en ver
 
 ```text
 elmt-utec-student-portal/
-├── index.html          → estructura principal del portal
+├── index.html              → estructura principal del portal
 ├── css/
-│   └── styles.css      → estilos visuales y diseño responsive
+│   └── styles.css          → estilos visuales y diseño responsive
 ├── js/
-│   ├── links.js        → configuración centralizada de servicios, enlaces y avisos
-│   └── app.js          → lógica de interacción de la interfaz
+│   ├── links.js            → configuración centralizada de servicios, enlaces y avisos
+│   ├── app.js              → lógica de interacción de la interfaz
+│   └── mascot.js           → saludo interactivo de Utechie
 ├── assets/
-│   ├── utec-logo.png   → identidad visual de UTEC
-│   ├── elmt-logo.png   → identidad visual de ELMT
-│   └── ...             → iconos del navegador
-├── README.md           → documentación del proyecto
-└── CHANGELOG.md        → historial de versiones y próximas mejoras
+│   ├── utec-logo.png       → identidad visual de UTEC
+│   ├── elmt-logo.png       → identidad visual de ELMT
+│   ├── utechie-cuerpo.webp → Utechie sin el brazo que saluda
+│   ├── utechie-brazo.webp  → brazo que saluda (capa animada)
+│   └── ...                 → iconos del navegador
+├── README.md               → documentación del proyecto
+└── CHANGELOG.md            → historial de versiones y próximas mejoras
 ```
 
 El proyecto utiliza HTML5, CSS3 y JavaScript vanilla. Todas las rutas internas son relativas para mantener la compatibilidad con la publicación del repositorio mediante GitHub Pages.
 
 La interfaz utiliza la paleta institucional observada en el sitio oficial de UTEC y recursos gráficos almacenados localmente en `assets/`; no depende de imágenes o fuentes externas durante su ejecución.
+
+## Utechie en la cabecera
+
+Debajo del texto de bienvenida aparece Utechie, centrado, con un globo que invita a interactuar: «¡Hola, soy Utechie! Haz clic para saludar». En pantallas anchas, el texto empieza a la altura del cuadro «Avisos y participación» y los pies de Utechie coinciden con su borde inferior; en pantallas angostas, Utechie se ubica entre el texto y el cuadro.
+
+- Cada saludo son dos movimientos del brazo (1,3 segundos), que empiezan y terminan con la mano levantada.
+- Saluda una vez al cargar la página y vuelve a saludar al pasar el cursor sobre él, al hacer clic o tocarlo, o al activarlo con el teclado (es un botón). Un clic durante un saludo no lo reinicia.
+- Al hacer clic, el globo responde «¡Gracias por saludar!» durante unos segundos.
+- Si el sistema tiene activada la opción de reducir el movimiento, no saluda solo: únicamente al hacer clic o activarlo con el teclado.
+- La animación es CSS, así que funciona igual en todos los navegadores, incluidos Safari y los de iPhone o iPad.
+
+Utechie se compone de dos imágenes WebP con transparencia del mismo tamaño (560 × 626 px), superpuestas en `.mascot-figure`:
+
+- `assets/utechie-cuerpo.webp` (unos 28 KB): el personaje sin el brazo que saluda.
+- `assets/utechie-brazo.webp` (unos 10 KB, sin pérdida): el brazo que saluda, colocado detrás del cuerpo para que el hombro quede oculto bajo el casco. Es un reflejo del brazo izquierdo, con su contorno redibujado (`#2d5e7a`), así que los dos brazos son iguales.
+
+La animación `mascot-wave` gira el brazo 26° alrededor del hombro, que está en el punto (372, 380) de las imágenes (`transform-origin: 66.43% 60.7%`). Si cambias el tamaño de las imágenes, el pivote o la pose del brazo, actualiza también `width` y `height` en `index.html`, y `aspect-ratio`, `transform-origin` y `@keyframes mascot-wave` en `css/styles.css`; con otras proporciones, los pies dejarían de coincidir con el borde del cuadro.
+
+Las imágenes se generaron a partir del clip de los segundos 9 a 15 del video de Utechie, con transparencia, mediante scripts de Python (numpy) y FFmpeg. El clip original y los scripts se conservan fuera del repositorio, en la carpeta `ELMT-videos/utechie-render`, cuyo `LEEME.txt` explica los pasos para volver a generarlas.
+
+Para probarlo localmente, abre `index.html` directamente o usa un servidor local (`py -m http.server 8000 --bind 127.0.0.1` desde la carpeta del proyecto y luego <http://127.0.0.1:8000>; se detiene con `Ctrl + C`). Recarga con `Ctrl + F5` después de reemplazar las imágenes, porque conservan el mismo nombre. Si Windows tiene desactivados los «Efectos de animación» (Configuración → Accesibilidad → Efectos visuales), el navegador pide reducir el movimiento: Utechie no saluda solo al cargar ni al pasar el cursor, únicamente al hacer clic.
 
 ## Actualización de enlaces
 

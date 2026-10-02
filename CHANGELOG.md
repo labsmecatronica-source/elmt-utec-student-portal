@@ -6,7 +6,18 @@ El proyecto utiliza versionado semántico. Las nuevas versiones deben añadirse 
 
 ## Sin publicar
 
-Sin cambios pendientes.
+### Añadido
+
+- 2026-10-02: Utechie en la cabecera, centrado debajo del texto de bienvenida, con el globo «¡Hola, soy Utechie! Haz clic para saludar». Cada saludo son dos movimientos del brazo (1,3 segundos). Saluda una vez al cargar la página y vuelve a saludar al pasar el cursor, al hacer clic o tocarlo, o al activarlo con el teclado; un clic durante un saludo no lo reinicia. Al hacer clic, el globo responde «¡Gracias por saludar!». Respeta la preferencia de reducir el movimiento: en ese caso solo saluda al hacer clic. La animación es CSS y funciona en todos los navegadores, incluidos Safari y los de iPhone o iPad.
+- 2026-10-02: Recursos `assets/utechie-cuerpo.webp` (unos 28 KB) y `assets/utechie-brazo.webp` (unos 10 KB), de 560 × 626 px con transparencia, y el script `js/mascot.js`. Se generaron a partir del clip de los segundos 9 a 15: el brazo que saluda del video, borroso y sin contorno, se reemplazó por un reflejo del brazo izquierdo con su contorno redibujado, de modo que ambos brazos son iguales y se ven nítidos.
+
+### Modificado
+
+- 2026-10-02: El texto de la cabecera empieza a la altura del cuadro «Avisos y participación», y Utechie termina a la altura de su borde inferior, para que ambas columnas queden simétricas. El cuadro conserva su altura natural en lugar de estirarse si la otra columna es más alta.
+
+### Eliminado
+
+- 2026-10-02: `assets/utechie.mp4`, el video original de 25 segundos, que no se utilizaba en el portal.
 
 ## [0.2.0] - 2026-10-02
 

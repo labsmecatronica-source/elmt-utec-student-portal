@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./css/styles.css">
     <script src="./js/links.js" defer></script>
     <script src="./js/app.js" defer></script>
+    <script src="./js/mascot.js" defer></script>
   </head>
 
   <body>
@@ -46,6 +47,35 @@
               Accede a los principales servicios, herramientas y recursos disponibles
               para estudiantes de los laboratorios.
             </p>
+
+            <div class="mascot">
+              <button class="mascot-button" type="button">
+                <span class="mascot-figure">
+                  <!-- El brazo va detrás del cuerpo: el hombro queda oculto bajo el casco. -->
+                  <img
+                    class="mascot-arm"
+                    src="./assets/utechie-brazo.webp"
+                    alt=""
+                    width="560"
+                    height="626"
+                  >
+                  <img
+                    class="mascot-body"
+                    src="./assets/utechie-cuerpo.webp"
+                    alt=""
+                    width="560"
+                    height="626"
+                  >
+                </span>
+                <span class="mascot-bubble">
+                  <strong>¡Hola, soy Utechie!</strong>
+                  <span class="mascot-hint">
+                    <span class="mascot-hint-default">Haz clic para saludar</span>
+                    <span class="mascot-hint-thanks">¡Gracias por saludar!</span>
+                  </span>
+                </span>
+              </button>
+            </div>
           </div>
 
           <aside class="notice-board" id="avisos" tabindex="-1" aria-labelledby="notices-title">
